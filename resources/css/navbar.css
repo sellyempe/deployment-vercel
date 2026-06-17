@@ -1,0 +1,93 @@
+/* ============================================================
+   Navbar — Scroll-aware transparent → frosted glass
+   ============================================================ */
+
+/* Base transition */
+#mainNav {
+    transition: background 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* Scrolled state: frosted glass white */
+#mainNav.scrolled {
+    background: rgba(255, 255, 255, 0.92) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 1px 20px rgba(0, 0, 0, 0.08);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+/* ── Nav Links ──────────────────────────────────────────── */
+.nav-link {
+    color: rgba(255, 255, 255, 0.9);
+    transition: color 0.3s, background 0.3s;
+}
+.nav-link:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 0.75rem;
+}
+#mainNav.scrolled .nav-link        { color: #374151; }
+#mainNav.scrolled .nav-link:hover  { color: #111827; background: rgba(0, 0, 0, 0.05); }
+
+/* Underline indicator on hover */
+.nav-link-underline {
+    display: block;
+    position: absolute;
+    bottom: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background: #f472b6;
+    border-radius: 9999px;
+    transition: width 0.3s ease;
+}
+.nav-link:hover .nav-link-underline              { width: 1rem; }
+#mainNav.scrolled .nav-link:hover .nav-link-underline { background: #db2777; }
+
+/* ── Logo Text ──────────────────────────────────────────── */
+/* ── Logo Text ──────────────────────────────────────────── */
+#logoText {
+    color: #ffffff;
+    transition: color 0.3s;
+}
+
+#mainNav.scrolled #logoText {
+    color: #db2777;
+}
+
+/* ── Auth Link (Masuk) ──────────────────────────────────── */
+.nav-auth-link {
+    color: rgba(255, 255, 255, 0.9);
+    transition: color 0.3s, background 0.3s;
+}
+.nav-auth-link:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 0.75rem;
+}
+#mainNav.scrolled .nav-auth-link        { color: #374151; }
+#mainNav.scrolled .nav-auth-link:hover  { color: #111827; background: rgba(0, 0, 0, 0.05); }
+
+/* ── User Dropdown Button ───────────────────────────────── */
+.nav-user-btn {
+    color: rgba(255, 255, 255, 0.9);
+    transition: color 0.3s, background 0.3s;
+}
+.nav-user-btn:hover                        { background: rgba(255, 255, 255, 0.12); border-radius: 0.75rem; }
+#mainNav.scrolled .nav-user-btn            { color: #374151; }
+#mainNav.scrolled .nav-user-btn:hover      { background: rgba(0, 0, 0, 0.05); }
+
+/* ── Divider ────────────────────────────────────────────── */
+.nav-divider {
+    background: rgba(255, 255, 255, 0.25);
+    transition: background 0.3s;
+}
+#mainNav.scrolled .nav-divider { background: rgba(0, 0, 0, 0.1); }
+
+/* ── Mobile Button ──────────────────────────────────────── */
+#mobileMenuBtn {
+    color: white;
+    transition: color 0.3s;
+}
+#mainNav.scrolled #mobileMenuBtn { color: #374151; }
