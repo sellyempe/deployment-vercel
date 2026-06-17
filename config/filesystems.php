@@ -40,7 +40,7 @@ return [
 
         'public' => [
             'driver' => env('PUBLIC_STORAGE_DRIVER', 'local'),
-            'root' => storage_path('app/public'),
+            'root' => env('PUBLIC_STORAGE_DRIVER') === 's3' ? '' : storage_path('app/public'),
             'url' => env('PUBLIC_STORAGE_DRIVER') === 's3' ? env('AWS_URL') : rtrim(env('APP_URL', 'http://localhost'), '/').'/storage',
             'visibility' => 'public',
             'throw' => false,
