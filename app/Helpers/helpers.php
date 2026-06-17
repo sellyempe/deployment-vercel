@@ -32,6 +32,10 @@ if (! function_exists('format_image_url')) {
             $path = substr($path, 8);
         }
 
+        if (config('filesystems.default') === 's3' || config('filesystems.disks.public.driver') === 's3') {
+            return rtrim(config('filesystems.disks.s3.url'), '/') . '/' . $path;
+        }
+
         return '/storage/'.$path;
     }
 }
