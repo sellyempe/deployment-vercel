@@ -31,7 +31,7 @@
 
             <div class="relative h-64 overflow-hidden">
                 @if($destination->image)
-                <img src="{{ $destination->image }}" alt="{{ $destination->name }}"
+                <img src="{{ format_image_url($destination->image) }}" alt="{{ $destination->name }}"
                     class="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500">
                 @else
                 <div class="w-full h-full bg-[#16476A] flex items-center justify-center">

@@ -82,7 +82,7 @@
                         <div class="flex items-center gap-3">
                             <div class="w-12 h-12 rounded-xl overflow-hidden bg-[#132440] flex-shrink-0">
                                 @if($trip->image)
-                                <img src="{{ $trip->image }}" alt="{{ $trip->title }}"
+                                <img src="{{ format_image_url($trip->image) }}" alt="{{ $trip->title }}"
                                     class="w-full h-full object-cover">
                                 @endif
                             </div>
