@@ -276,7 +276,7 @@
             element.removeAttribute('onclick'); // Prevent native popup
 
             // Extract and clean confirmation message
-            const confirmMatch = onclickAttr.match(/confirm\(['"](.*)['"]\)/);
+            const confirmMatch = onclickAttr.match(/confirm\(['"]([^'"]*)['"]\)/);
             let message = confirmMatch ? confirmMatch[1] : 'Apakah Anda yakin?';
             message = message.replace(/\\'/g, "'").replace(/\\"/g, '"'); // Unescape quotes
 
