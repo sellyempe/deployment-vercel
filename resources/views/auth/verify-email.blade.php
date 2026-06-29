@@ -56,6 +56,19 @@
                             Keluar
                         </button>
                     </form>
+
+                    @if (app()->environment('local'))
+                    <div class="mt-6 p-4 border border-dashed border-pink-300 rounded-xl bg-pink-50/50 text-center">
+                        <p class="text-xs font-semibold text-pink-700 mb-2">🧑‍💻 AREA DEVELOPER (LOCAL ONLY)</p>
+                        <form method="POST" action="{{ route('verification.verify.local') }}">
+                            @csrf
+                            <button type="submit"
+                                class="w-full bg-pink-100 hover:bg-pink-200 text-pink-700 font-bold py-2.5 px-4 rounded-xl text-sm transition">
+                                Verifikasi Otomatis (Bypass)
+                            </button>
+                        </form>
+                    </div>
+                    @endif
                 </div>
 
             </div>

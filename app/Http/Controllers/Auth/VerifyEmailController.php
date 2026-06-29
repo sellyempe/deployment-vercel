@@ -47,4 +47,20 @@ class VerifyEmailController extends Controller
 
         return back()->with('status', 'verification-link-sent');
     }
+
+    /**
+     * Bypass verifikasi email untuk lingkungan lokal (development).
+     */
+    public function verifyLocal(Request $request)
+    {
+        if (!app()->environment('local')) {
+            abort(403);
+        }
+
+        if ($request->user()->markEmailAsVerified()) {
+            event(new \Illuminate\Auth\Events\Verified($request->user()));
+        }
+
+        return redirect()->intended('/?verified=1')->with('success', 'Email berhasil diverifikasi secara otomatis (Developer Mode)!');
+    }
 }

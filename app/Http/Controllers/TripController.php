@@ -288,12 +288,11 @@ class TripController extends Controller
             }
         }
 
-        return redirect()
-            ->route('admin.dashboard')
-            ->with(
-                'success',
-                'Trip berhasil ditambahkan'
-            );
+        return response()->json([
+            'success' => true,
+            'message' => 'Trip berhasil ditambahkan',
+            'data' => $trip
+        ], 201);
     }
 
     // UPDATE TRIP
@@ -373,12 +372,11 @@ class TripController extends Controller
             }
         }
 
-        return redirect()
-            ->back()
-            ->with(
-                'success',
-                'Trip berhasil diperbarui'
-            );
+        return response()->json([
+            'success' => true,
+            'message' => 'Trip berhasil diperbarui',
+            'data' => $trip
+        ]);
     }
 
     // DELETE TRIP

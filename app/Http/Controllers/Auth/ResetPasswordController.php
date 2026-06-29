@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Illuminate\Auth\Events\PasswordReset;
@@ -54,8 +53,8 @@ class ResetPasswordController extends Controller
             $errorMsg = 'Tautan reset kata sandi tidak valid atau sudah kedaluwarsa.';
         } elseif ($status === Password::INVALID_USER) {
             $errorMsg = 'Kami tidak dapat menemukan pengguna dengan alamat email tersebut.';
-        } elseif ($status === Password::INVALID_PASSWORD) {
-            $errorMsg = 'Kata sandi baru harus minimal 8 karakter dan cocok dengan konfirmasi.';
+        } else {
+            $errorMsg = 'Kata sandi baru harus minimal 8 karakter dan sesuai dengan konfirmasi.';
         }
 
         return back()->withErrors(['email' => $errorMsg]);

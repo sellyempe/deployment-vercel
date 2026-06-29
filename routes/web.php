@@ -68,6 +68,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/email/verification-notification', [VerifyEmailController::class, 'resend'])
         ->middleware('throttle:6,1')
         ->name('verification.send');
+
+    // Bypass verifikasi email di local environment
+    if (app()->environment('local')) {
+        Route::post('/email/verify-local', [VerifyEmailController::class, 'verifyLocal'])
+            ->name('verification.verify.local');
+    }
 });
 
 // =====================

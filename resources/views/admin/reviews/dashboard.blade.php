@@ -90,7 +90,8 @@
                                 </div>
                                 <div>
                                     <p class="text-sm font-semibold text-white">
-                                        {{ $review->user->name ?? 'User Terhapus' }}</p>
+                                        {{ $review->user->name ?? 'User Terhapus' }}
+                                    </p>
                                     <p class="text-xs text-gray-500 mt-0.5">{{ $review->created_at->format('d M Y') }}
                                     </p>
                                 </div>
@@ -98,7 +99,8 @@
                         </td>
                         <td class="px-6 py-6">
                             <p class="text-sm font-medium text-white">
-                                {{ $review->reviewable?->title ?? $review->reviewable?->name ?? 'Item Terhapus' }}</p>
+                                {{ $review->reviewable?->title ?? $review->reviewable?->name ?? 'Item Terhapus' }}
+                            </p>
                             <span class="inline-block px-2 py-0.5 mt-1 bg-white/5 text-[10px] text-white rounded">
                                 {{ $review->reviewable_type ? str_replace('App\\Models\\', '', $review->reviewable_type) : 'N/A' }}
                             </span>
@@ -136,7 +138,9 @@
                                 @csrf @method('PUT')
                                 <label class="relative inline-flex items-center cursor-pointer">
                                     <input type="checkbox" name="status" value="approved"
-                                        onchange="this.form.action = this.checked ? '{{ route('admin.reviews.approve', $review->id) }}' : '{{ route('admin.reviews.reject', $review->id) }}'; this.form.submit()"
+                                        data-approve-url="{{ route('admin.reviews.approve', $review->id) }}"
+                                        data-reject-url="{{ route('admin.reviews.reject', $review->id) }}"
+                                        onchange="this.form.action = this.checked ? this.dataset.approveUrl : this.dataset.rejectUrl; this.form.submit()"
                                         {{ $review->status == 'approved' ? 'checked' : '' }} class="sr-only peer">
                                     <div
                                         class="w-11 h-6 bg-gray-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500">

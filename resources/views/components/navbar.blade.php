@@ -46,7 +46,7 @@
                         class="flex items-center gap-2 px-3 py-2 rounded-full hover:bg-white/10 transition">
 
                         @if(auth()->user()->photo)
-                        <img src="{{ asset('storage/' . auth()->user()->photo) }}" alt="Profile"
+                        <img src="{{ format_image_url(auth()->user()->photo) }}" alt="Profile"
                             class="w-9 h-9 rounded-full object-cover">
                         @else
                         <div
