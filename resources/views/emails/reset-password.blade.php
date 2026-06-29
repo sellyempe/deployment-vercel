@@ -24,7 +24,7 @@
             </a>
         </div>
         <p style="font-size: 15px; line-height: 1.6; color: #4b5563; margin-bottom: 10px;">
-            Tautan reset kata sandi ini akan kedaluwarsa dalam 60 menit.
+            Tautan reset kata sandi ini akan kedaluwarsa dalam 15 menit.
         </p>
         <p style="font-size: 15px; line-height: 1.6; color: #4b5563; margin-bottom: 30px;">
             Jika Anda tidak meminta atur ulang kata sandi, Anda dapat mengabaikan email ini dengan aman.
