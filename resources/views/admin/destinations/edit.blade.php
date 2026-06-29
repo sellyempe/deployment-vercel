@@ -78,7 +78,7 @@
                                     class="bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow-sm">SAMPUL</span>
                                 @endif
                                 <button type="button" 
-                                    onclick="deleteImage({{ $img->id }})"
+                                    onclick="if(confirm('Hapus foto ini dari galeri?')) { document.getElementById('delete-img-{{ $img->id }}').submit(); }"
                                     class="bg-red-500 hover:bg-red-600 text-white p-1.5 rounded-lg transition shadow-md">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -162,12 +162,6 @@
     @endforeach
 
     <script>
-    function deleteImage(id) {
-        if (confirm('Hapus foto ini dari galeri?')) {
-            document.getElementById('delete-img-' + id).submit();
-        }
-    }
-
     function previewImage(input) {
         if (!input.files[0]) return;
         const reader = new FileReader();
