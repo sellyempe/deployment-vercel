@@ -341,13 +341,6 @@
                     </div>
                     @endif
 
-                    @foreach($trip->images as $img)
-                    <form id="delete-img-{{ $img->id }}" action="{{ route('admin.images.destroy', $img->id) }}"
-                        method="POST" class="hidden">
-                        @csrf @method('DELETE')
-                    </form>
-                    @endforeach
-
                     <div id="imagesDropArea"
                         class="border-2 border-dashed border-white/10 rounded-xl p-6 text-center cursor-pointer hover:border-pink-500/50 transition-colors bg-gray-800/30"
                         onclick="document.getElementById('imagesInput').click()">
@@ -494,6 +487,13 @@
             </div>
         </div>
     </form>
+
+    @foreach($trip->images as $img)
+    <form id="delete-img-{{ $img->id }}" action="{{ route('admin.images.destroy', $img->id) }}"
+        method="POST" class="hidden">
+        @csrf @method('DELETE')
+    </form>
+    @endforeach
 
     <script>
     let itineraryCount = {{ max(1, count($trip->itineraries)) }},
