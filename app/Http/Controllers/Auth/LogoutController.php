@@ -34,4 +34,4 @@ class LogoutController extends Controller
             ->with('success_title', $title)
             ->with('success_type', 'logout');
     }
-    }
+}

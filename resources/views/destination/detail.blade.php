@@ -25,12 +25,14 @@
                 <div class="swiper-wrapper">
                     @forelse($destination->images as $img)
                     <div class="swiper-slide relative">
-                        <img src="{{ format_image_url($img->path) }}" alt="{{ $destination->name }}" class="w-full h-full object-cover">
+                        <img src="{{ format_image_url($img->path) }}" alt="{{ $destination->name }}"
+                            class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80"></div>
                     </div>
                     @empty
                     <div class="swiper-slide relative">
-                        <img src="{{ format_image_url($destination->image) }}" alt="{{ $destination->name }}" class="w-full h-full object-cover">
+                        <img src="{{ format_image_url($destination->image) }}" alt="{{ $destination->name }}"
+                            class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80"></div>
                     </div>
                     @endforelse
@@ -70,7 +72,8 @@
                             {{ $destination->location }}
                         </span>
                     </div>
-                    <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold text-white tracking-tight drop-shadow-2xl">
+                    <h1
+                        class="text-5xl md:text-6xl lg:text-7xl font-extrabold text-white tracking-tight drop-shadow-2xl">
                         {{ $destination->name }}
                     </h1>
                 </div>
@@ -118,11 +121,7 @@
                 </div>
 
                 <div id="reviews-section" class="mt-12">
-                    @auth
-                    @include('components.review-form', ['reviewableType' => 'App\\Models\\Destination', 'reviewableId' => $destination->id])
-                    @endauth
-
-                    <div id="reviews-list" class="space-y-6 mt-12">
+                    <div id="reviews-list" class="space-y-6">
                         <h2 class="text-2xl font-extrabold text-[#020617] mb-8">Apa Kata Traveler?</h2>
                         <p class="text-gray-500 text-center py-8">Memuat ulasan...</p>
                     </div>
@@ -172,7 +171,8 @@
             if (!reviewsList) return;
 
             if (reviews.length === 0) {
-                reviewsList.innerHTML = `<p class="text-gray-500 text-center py-8">Belum ada ulasan untuk destinasi ini</p>`;
+                reviewsList.innerHTML =
+                    `<p class="text-gray-500 text-center py-8">Belum ada ulasan untuk destinasi ini</p>`;
                 return;
             }
 
@@ -239,43 +239,43 @@
     </script>
 </body>
 
-</html>                           ${'⭐'.repeat(review.rating)}
-                        </div>
-                    </div>
-                    <p class="text-gray-600 leading-relaxed">
-                        ${review.comment || 'Tidak ada komentar'}
-                    </p>
-                </div>`;
-            }).join('');
-        } catch (error) {
-            console.error('Error loading reviews:', error);
-        }
-    }
+</html> ${'⭐'.repeat(review.rating)}
+</div>
+</div>
+<p class="text-gray-600 leading-relaxed">
+    ${review.comment || 'Tidak ada komentar'}
+</p>
+</div>`;
+}).join('');
+} catch (error) {
+console.error('Error loading reviews:', error);
+}
+}
 
-    // ===== GALLERY MODAL =====
-    function openGallery(imgSrc) {
-        const modal = document.getElementById('gallery-modal');
-        const modalImg = document.getElementById('modal-img');
-        if (modal && modalImg) {
-            modalImg.src = imgSrc;
-            modal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        }
-    }
+// ===== GALLERY MODAL =====
+function openGallery(imgSrc) {
+const modal = document.getElementById('gallery-modal');
+const modalImg = document.getElementById('modal-img');
+if (modal && modalImg) {
+modalImg.src = imgSrc;
+modal.classList.remove('hidden');
+document.body.style.overflow = 'hidden';
+}
+}
 
-    function closeGallery() {
-        const modal = document.getElementById('gallery-modal');
-        if (modal) {
-            modal.classList.add('hidden');
-            document.body.style.overflow = 'auto';
-        }
-    }
+function closeGallery() {
+const modal = document.getElementById('gallery-modal');
+if (modal) {
+modal.classList.add('hidden');
+document.body.style.overflow = 'auto';
+}
+}
 
-    // Close modal on escape key
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeGallery();
-    });
-    </script>
+// Close modal on escape key
+document.addEventListener('keydown', (e) => {
+if (e.key === 'Escape') closeGallery();
+});
+</script>
 </body>
 
 </html>

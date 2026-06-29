@@ -34,38 +34,50 @@
                 <div class="swiper-wrapper">
                     @forelse($trip->images as $img)
                     <div class="swiper-slide relative">
-                        <img src="{{ format_image_url($img->path) }}" alt="{{ $trip->title }}" class="w-full h-full object-cover">
+                        <img src="{{ format_image_url($img->path) }}" alt="{{ $trip->title }}"
+                            class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80"></div>
                     </div>
                     @empty
                     <div class="swiper-slide relative">
-                        <img src="{{ format_image_url($trip->image) }}" alt="{{ $trip->title }}" class="w-full h-full object-cover">
+                        <img src="{{ format_image_url($trip->image) }}" alt="{{ $trip->title }}"
+                            class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80"></div>
                     </div>
                     @endforelse
                 </div>
-                
+
                 <!-- Navigation Arrows (Tailwind Styled) -->
-                <div class="swiper-button-next !w-12 !h-12 !bg-black/20 !backdrop-blur-sm !rounded-full !after:text-lg !after:font-bold !text-white hover:!bg-pink-600/50 transition-colors"></div>
-                <div class="swiper-button-prev !w-12 !h-12 !bg-black/20 !backdrop-blur-sm !rounded-full !after:text-lg !after:font-bold !text-white hover:!bg-pink-600/50 transition-colors"></div>
-                
+                <div
+                    class="swiper-button-next !w-12 !h-12 !bg-black/20 !backdrop-blur-sm !rounded-full !after:text-lg !after:font-bold !text-white hover:!bg-pink-600/50 transition-colors">
+                </div>
+                <div
+                    class="swiper-button-prev !w-12 !h-12 !bg-black/20 !backdrop-blur-sm !rounded-full !after:text-lg !after:font-bold !text-white hover:!bg-pink-600/50 transition-colors">
+                </div>
+
                 <!-- Pagination -->
-                <div class="swiper-pagination ![--swiper-pagination-color:#db2777] ![--swiper-pagination-bullet-inactive-color:#fff]"></div>
+                <div
+                    class="swiper-pagination ![--swiper-pagination-color:#db2777] ![--swiper-pagination-bullet-inactive-color:#fff]">
+                </div>
             </div>
 
             <div class="absolute bottom-16 left-0 right-0 z-20 pointer-events-none">
                 <div class="max-w-7xl mx-auto px-4 w-full text-left">
-                    <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-6 tracking-tight drop-shadow-2xl">
+                    <h1
+                        class="text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-6 tracking-tight drop-shadow-2xl">
                         {{ $trip->title }}
                     </h1>
                     <div class="flex flex-wrap items-center gap-4 pointer-events-auto">
-                        <span class="px-5 py-2.5 bg-pink-600 text-white rounded-full font-bold shadow-lg shadow-pink-600/30 flex items-center gap-2">
+                        <span
+                            class="px-5 py-2.5 bg-pink-600 text-white rounded-full font-bold shadow-lg shadow-pink-600/30 flex items-center gap-2">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
                             {{ $trip->duration_days }} Hari
                         </span>
-                        <span class="px-5 py-2.5 bg-white/10 backdrop-blur-md text-white border border-white/20 rounded-full font-bold flex items-center gap-2">
+                        <span
+                            class="px-5 py-2.5 bg-white/10 backdrop-blur-md text-white border border-white/20 rounded-full font-bold flex items-center gap-2">
                             <span class="text-pink-400">Rp</span> {{ number_format($trip->price, 0, ',', '.') }}
                         </span>
                     </div>
@@ -125,7 +137,7 @@
                                             class="bg-pink-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold">{{ $itinerary->day_number }}</span>
                                         <h3 class="text-2xl font-bold text-[#020617]">{{ $itinerary->title }}</h3>
                                     </div>
-                                    <p class="text-gray-600 mb-4">{{ $itinerary->description }}</p>
+                                    <p class="text-gray-600 mb-4 whitespace-pre-line">{{ $itinerary->description }}</p>
 
                                     @if($itinerary->activities && is_array($itinerary->activities))
                                     <div class="bg-gray-50 rounded-lg p-6 space-y-4">
@@ -170,13 +182,20 @@
 
                             <div class="flex flex-col gap-3 mb-8">
                                 @auth
+                                @if(auth()->user()->role === 'admin')
+                                <button disabled
+                                    class="w-full bg-gray-200 text-gray-500 font-bold py-4 rounded-2xl cursor-not-allowed text-center flex items-center justify-center">
+                                    Admin Tidak Bisa Memesan
+                                </button>
+                                @else
                                 <a href="{{ route('booking.create', $trip->id) }}"
-                                    class="w-full bg-[#020617] text-white font-bold py-4 rounded-2xl hover:bg-slate-900 transition-all hover:-translate-y-1 shadow-lg shadow-slate-900/20 text-center flex items-center justify-center gap-2">
+                                    class="w-full bg-[#020617] text-white font-bold py-4 rounded-2xl hover:bg-slate-900 transition-all hover:-translate-y-1 shadow-lg shadow-slate-900/20 text-center flex items-center justify-center">
                                     Pesan Sekarang
                                 </a>
+                                @endif
                                 @else
                                 <a href="{{ route('login') }}"
-                                    class="w-full bg-pink-600 text-white font-bold py-4 rounded-2xl hover:bg-pink-700 transition-all hover:-translate-y-1 shadow-lg shadow-pink-600/30 text-center flex items-center justify-center gap-2">
+                                    class="w-full bg-pink-600 text-white font-bold py-4 rounded-2xl hover:bg-pink-700 transition-all hover:-translate-y-1 shadow-lg shadow-pink-600/30 text-center flex items-center justify-center">
                                     Login untuk Pesan
                                 </a>
                                 @endauth
@@ -231,12 +250,7 @@
 
                 <div class="grid grid-cols-1 gap-12">
                     <div id="reviews-section">
-                        @auth
-                        @include('components.review-form', ['reviewableType' => 'App\\Models\\Trip', 'reviewableId' =>
-                        $trip->id])
-                        @endauth
-
-                        <div id="reviews-list" class="space-y-6 mt-12">
+                        <div id="reviews-list" class="space-y-6">
                             <p class="text-gray-500 text-center py-8">Memuat ulasan...</p>
                         </div>
                     </div>
@@ -319,7 +333,8 @@
             if (!reviewsList) return;
 
             if (reviews.length === 0) {
-                reviewsList.innerHTML = `<p class="text-gray-500 text-center py-8">Belum ada ulasan untuk trip ini</p>`;
+                reviewsList.innerHTML =
+                    `<p class="text-gray-500 text-center py-8">Belum ada ulasan untuk trip ini</p>`;
                 return;
             }
 
@@ -361,4 +376,5 @@
     }
     </script>
 </body>
+
 </html>

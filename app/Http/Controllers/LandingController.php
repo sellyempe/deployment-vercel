@@ -13,7 +13,7 @@ class LandingController extends Controller
         // Menghitung total user dengan role 'user'
         $totalTravelers = User::where('role', 'user')->count();
         $totalDestinations = Destination::count();
-        $averageRating = Review::avg('rating') ?? 0;
+        $averageRating = Review::approved()->avg('rating') ?? 0;
 
         return view('landing', [
             'totalTravelers' => $totalTravelers,

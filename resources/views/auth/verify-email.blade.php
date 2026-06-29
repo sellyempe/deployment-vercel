@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verify Email - {{ get_setting('site_name', 'Pink Tour and Travel') }}</title>
+    <title>Verifikasi Email - {{ get_setting('site_name', 'Pink Tour and Travel') }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
@@ -27,17 +27,18 @@
                 <!-- Heading -->
                 <div class="text-center mb-8">
                     <h2 class="text-4xl font-bold text-[#020617] mb-2">
-                        Verify Your Email
+                        Verifikasi Email Anda
                     </h2>
                     <p class="text-slate-500">
-                        Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you?
+                        Terima kasih telah mendaftar! Sebelum memulai, silakan verifikasi alamat email Anda dengan
+                        mengeklik tautan yang baru saja kami kirimkan ke email Anda.
                     </p>
                 </div>
 
                 @if (session('status') == 'verification-link-sent')
-                    <div class="bg-green-50 border border-green-200 text-green-700 p-4 rounded-xl mb-6 text-sm text-center">
-                        A new verification link has been sent to the email address you provided during registration.
-                    </div>
+                <div class="bg-green-50 border border-green-200 text-green-700 p-4 rounded-xl mb-6 text-sm text-center">
+                    Tautan verifikasi baru telah dikirim ke alamat email yang Anda berikan saat pendaftaran.
+                </div>
                 @endif
 
                 <div class="space-y-4">
@@ -45,14 +46,14 @@
                         @csrf
                         <button type="submit"
                             class="w-full bg-pink-600 hover:bg-pink-700 text-white font-semibold py-3 rounded-xl transition duration-200">
-                            Resend Verification Email
+                            Kirim Ulang Email Verifikasi
                         </button>
                     </form>
 
                     <form method="POST" action="{{ route('logout') }}" class="text-center">
                         @csrf
                         <button type="submit" class="text-sm text-gray-600 hover:text-gray-900 font-medium underline">
-                            Log Out
+                            Keluar
                         </button>
                     </form>
                 </div>

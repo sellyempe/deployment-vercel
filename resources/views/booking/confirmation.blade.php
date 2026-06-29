@@ -129,9 +129,7 @@
                                 class="absolute top-0 right-0 w-64 h-64 bg-gray-100/50 rounded-full blur-3xl -mt-20 -mr-20 pointer-events-none">
                             </div>
                             <h3
-                                class="text-2xl font-extrabold text-gray-900 mb-6 relative z-10 flex items-center gap-2">
-                                <span
-                                    class="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center shadow-sm text-gray-500 text-lg">👤</span>
+                                class="text-2xl font-extrabold text-gray-900 mb-6 relative z-10">
                                 Data Pemesan
                             </h3>
 
@@ -167,12 +165,8 @@
                             </div>
 
                             <button id="pay-button"
-                                class="w-full flex items-center justify-center py-4 px-6 bg-pink-600 text-white rounded-2xl font-bold hover:bg-pink-500 transition-all shadow-lg shadow-pink-600/30 hover:-translate-y-1 gap-2 mb-4">
+                                class="w-full flex items-center justify-center py-4 px-6 bg-pink-600 text-white rounded-2xl font-bold hover:bg-pink-500 transition-all shadow-lg shadow-pink-600/30 hover:-translate-y-1 mb-4">
                                 Bayar Sekarang
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                                </svg>
                             </button>
 
                         </div>

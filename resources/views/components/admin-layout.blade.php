@@ -76,9 +76,9 @@
                             : 'text-[#132440] hover:text-white hover:bg-[#EC008C]'   }}">
                 <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.１１８l-3.976-2.888c-.784-.57-.38-１.８１.588-１.８１h4.９１４a１ １ ０ ００.９５１-.６９l１.５１９-４.６７４z" />
+                        d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
                 </svg>
-                <span>Review & Testimoni</span>
+                <span>Review &amp; Testimoni</span>
             </a>
 
             <a href="{{ route('admin.settings') }}" class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all
@@ -164,6 +164,144 @@
         </main>
     </div>
 
+    <!-- SweetAlert2 library and interceptor script -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        // Shared SweetAlert2 config with inline styles
+        function showDeleteConfirm(message) {
+            return Swal.fire({
+                title: 'Konfirmasi Tindakan',
+                text: message,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, Hapus',
+                cancelButtonText: 'Batal',
+                reverseButtons: true,
+                confirmButtonColor: '#EF4444',
+                cancelButtonColor: '#6B7280',
+                didOpen: (popup) => {
+                    // Style the popup
+                    popup.style.backgroundColor = '#16476A';
+                    popup.style.border = '1px solid rgba(255,255,255,0.1)';
+                    popup.style.borderRadius = '28px';
+                    popup.style.color = '#fff';
+                    popup.style.padding = '1.5rem';
+                    popup.style.boxShadow = '0 25px 50px -12px rgba(0,0,0,0.5)';
+
+                    // Style the title
+                    const title = popup.querySelector('.swal2-title');
+                    if (title) {
+                        title.style.color = '#fff';
+                        title.style.fontSize = '1.25rem';
+                        title.style.fontWeight = '700';
+                    }
+
+                    // Style the message text
+                    const html = popup.querySelector('.swal2-html-container');
+                    if (html) {
+                        html.style.color = '#d1d5db';
+                        html.style.fontSize = '0.875rem';
+                        html.style.marginTop = '0.5rem';
+                    }
+
+                    // Style the icon
+                    const icon = popup.querySelector('.swal2-icon');
+                    if (icon) {
+                        icon.style.borderColor = '#f59e0b';
+                        icon.style.color = '#f59e0b';
+                    }
+
+                    // Style the confirm button
+                    const confirmBtn = popup.querySelector('.swal2-confirm');
+                    if (confirmBtn) {
+                        confirmBtn.style.backgroundColor = '#EF4444';
+                        confirmBtn.style.color = '#fff';
+                        confirmBtn.style.fontWeight = '600';
+                        confirmBtn.style.padding = '0.625rem 1.25rem';
+                        confirmBtn.style.borderRadius = '0.75rem';
+                        confirmBtn.style.border = 'none';
+                        confirmBtn.style.cursor = 'pointer';
+                        confirmBtn.style.transition = 'background-color 0.2s';
+                        confirmBtn.addEventListener('mouseenter', () => confirmBtn.style
+                            .backgroundColor = '#DC2626');
+                        confirmBtn.addEventListener('mouseleave', () => confirmBtn.style
+                            .backgroundColor = '#EF4444');
+                    }
+
+                    // Style the cancel button
+                    const cancelBtn = popup.querySelector('.swal2-cancel');
+                    if (cancelBtn) {
+                        cancelBtn.style.backgroundColor = 'rgba(255,255,255,0.1)';
+                        cancelBtn.style.color = '#fff';
+                        cancelBtn.style.fontWeight = '600';
+                        cancelBtn.style.padding = '0.625rem 1.25rem';
+                        cancelBtn.style.borderRadius = '0.75rem';
+                        cancelBtn.style.border = 'none';
+                        cancelBtn.style.cursor = 'pointer';
+                        cancelBtn.style.transition = 'background-color 0.2s';
+                        cancelBtn.addEventListener('mouseenter', () => cancelBtn.style
+                            .backgroundColor = 'rgba(255,255,255,0.2)');
+                        cancelBtn.addEventListener('mouseleave', () => cancelBtn.style
+                            .backgroundColor = 'rgba(255,255,255,0.1)');
+                    }
+                }
+            });
+        }
+
+        // 1. Intercept all forms that use inline native confirm() in onsubmit
+        document.querySelectorAll('form[onsubmit*="confirm("]').forEach(form => {
+            const onsubmitAttr = form.getAttribute('onsubmit');
+            form.removeAttribute('onsubmit'); // Prevent native popup
+
+            // Extract and clean confirmation message
+            const match = onsubmitAttr.match(/confirm\(['"](.*)['"]\)/);
+            let message = match ? match[1] : 'Apakah Anda yakin ingin menghapus data ini?';
+            message = message.replace(/\\'/g, "'").replace(/\\"/g, '"'); // Unescape quotes
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                showDeleteConfirm(message).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
+        });
+
+        // 2. Intercept elements (like buttons) that use inline confirm() in onclick
+        document.querySelectorAll('[onclick*="confirm("]').forEach(element => {
+            const onclickAttr = element.getAttribute('onclick');
+            element.removeAttribute('onclick'); // Prevent native popup
+
+            // Extract and clean confirmation message
+            const confirmMatch = onclickAttr.match(/confirm\(['"](.*)['"]\)/);
+            let message = confirmMatch ? confirmMatch[1] : 'Apakah Anda yakin?';
+            message = message.replace(/\\'/g, "'").replace(/\\"/g, '"'); // Unescape quotes
+
+            // Parse action code
+            let actionCode = '';
+            const firstBrace = onclickAttr.indexOf('{');
+            const lastBrace = onclickAttr.lastIndexOf('}');
+            if (firstBrace !== -1 && lastBrace !== -1) {
+                actionCode = onclickAttr.substring(firstBrace + 1, lastBrace).trim();
+            } else {
+                const ifConfirmRegex = /if\s*\(\s*confirm\s*\(.*?\)\s*\)\s*/;
+                actionCode = onclickAttr.replace(ifConfirmRegex, '').trim();
+            }
+
+            element.addEventListener('click', function(e) {
+                e.preventDefault();
+                showDeleteConfirm(message).then((result) => {
+                    if (result.isConfirmed) {
+                        new Function(actionCode)();
+                    }
+                });
+            });
+        });
+    });
+    </script>
 </body>
 
 </html>

@@ -226,6 +226,53 @@ class AdminController extends Controller
             }
         }
 
+        // Update Itineraries
+        $trip->itineraries()->delete();
+        if ($request->has('itineraries')) {
+            foreach ($request->itineraries as $itinerary) {
+                if (empty($itinerary['title'])) {
+                    continue;
+                }
+                TripItinerary::create([
+                    'trip_id' => $trip->id,
+                    'day_number' => $itinerary['day_number'],
+                    'title' => $itinerary['title'],
+                    'description' => $itinerary['description'] ?? '',
+                    'activities' => [],
+                ]);
+            }
+        }
+
+        // Update Includes
+        $trip->includes()->delete();
+        if ($request->has('includes')) {
+            foreach ($request->includes as $include) {
+                if (empty($include['item_name'])) {
+                    continue;
+                }
+                TripInclude::create([
+                    'trip_id' => $trip->id,
+                    'item_name' => $include['item_name'],
+                    'category' => $include['category'] ?? '',
+                ]);
+            }
+        }
+
+        // Update Excludes
+        $trip->excludes()->delete();
+        if ($request->has('excludes')) {
+            foreach ($request->excludes as $exclude) {
+                if (empty($exclude['item_name'])) {
+                    continue;
+                }
+                TripExclude::create([
+                    'trip_id' => $trip->id,
+                    'item_name' => $exclude['item_name'],
+                    'category' => $exclude['category'] ?? '',
+                ]);
+            }
+        }
+
         return redirect()->route('admin.dashboard')->with('success', 'Trip "'.$trip->title.'" berhasil diperbarui!');
     }
 

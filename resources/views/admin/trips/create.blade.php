@@ -167,10 +167,10 @@
                                     </div>
                                     <div>
                                         <label class="block text-xs font-medium text-gray-500 mb-1">Deskripsi</label>
-                                        <input type="text" name="itineraries[0][description]"
+                                        <textarea name="itineraries[0][description]" rows="2"
                                             placeholder="Aktivitas hari ini..."
-                                            class="w-full px-3 py-2 bg-gray-700 border border-white/10 rounded-lg text-white placeholder-gray-600 text-sm focus:outline-none focus:border-pink-500 transition"
-                                            required>
+                                            class="w-full px-3 py-2 bg-gray-700 border border-white/10 rounded-lg text-white placeholder-gray-600 text-sm focus:outline-none focus:border-pink-500 transition resize-y"
+                                            required></textarea>
                                     </div>
                                 </div>
                                 <button type="button" onclick="removeItem(this, '.itinerary-item')"
@@ -251,27 +251,32 @@
             <div class="space-y-5">
 
                 <div class="bg-[#16476A] border border-white/5 rounded-2xl p-6">
-                    <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">Galeri Trip <span class="text-pink-500">*</span></h3>
+                    <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">Galeri Trip <span
+                            class="text-pink-500">*</span></h3>
                     <div id="imagesDropArea"
                         class="border-2 border-dashed border-white/10 rounded-xl p-8 text-center cursor-pointer hover:border-pink-500/50 transition-colors"
                         onclick="document.getElementById('imagesInput').click()">
-                        
+
                         <div id="imagesPreviewWrap" class="hidden grid grid-cols-3 md:grid-cols-4 gap-2 mb-4">
                             <!-- Previews injected here -->
                         </div>
 
                         <div id="imagesPlaceholder">
-                            <div class="w-16 h-16 bg-gray-800 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                                <svg class="w-8 h-8 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            <div
+                                class="w-16 h-16 bg-gray-800 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-pink-500" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                 </svg>
                             </div>
                             <p class="text-white font-bold mb-1">Klik atau seret banyak foto ke sini</p>
                             <p class="text-gray-400 text-xs">Foto pertama akan otomatis menjadi sampul utama</p>
-                            <p class="text-gray-500 text-[10px] mt-2 uppercase tracking-widest">JPG, PNG, WebP · MAKS 5MB / FOTO</p>
+                            <p class="text-gray-500 text-[10px] mt-2 uppercase tracking-widest">JPG, PNG, WebP · MAKS
+                                5MB / FOTO</p>
                         </div>
                     </div>
-                    <input type="file" id="imagesInput" name="images[]" accept="image/*" class="hidden" multiple required
+                    <input type="file" id="imagesInput" name="images[]" accept="image/*" class="hidden" multiple
                         onchange="previewMultipleImages(this)">
                     @error('images')<p class="text-red-400 text-xs mt-2">{{ $message }}</p>@enderror
                     @error('images.*')<p class="text-red-400 text-xs mt-1">{{ $message }}</p>@enderror
@@ -374,7 +379,7 @@
                     Simpan Trip
                 </button>
                 <a href="{{ route('admin.dashboard') }}"
-                    class="block w-full text-center px-6 py-3 bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white font-medium rounded-xl transition">
+                    class="block w-full text-center px-6 py-3 bg-gray-100 hover:bg-gray-250 text-gray-600 hover:text-gray-800 border border-gray-200/50 font-medium rounded-xl transition">
                     Batal
                 </a>
 
@@ -402,11 +407,11 @@
         const wrap = document.getElementById('imagesPreviewWrap');
         const placeholder = document.getElementById('imagesPlaceholder');
         wrap.innerHTML = '';
-        
+
         if (input.files && input.files.length > 0) {
             wrap.classList.remove('hidden');
             placeholder.classList.add('hidden');
-            
+
             Array.from(input.files).forEach(file => {
                 const reader = new FileReader();
                 reader.onload = e => {
@@ -441,8 +446,8 @@
                         </div>
                         <div>
                             <label class="block text-xs font-medium text-gray-500 mb-1">Deskripsi</label>
-                            <input type="text" name="itineraries[${idx}][description]" placeholder="Aktivitas hari ini..."
-                                   class="w-full px-3 py-2 bg-gray-700 border border-white/10 rounded-lg text-white placeholder-gray-600 text-sm focus:outline-none focus:border-pink-500 transition" required>
+                            <textarea name="itineraries[${idx}][description]" placeholder="Aktivitas hari ini..." rows="2"
+                                      class="w-full px-3 py-2 bg-gray-750 border border-white/10 rounded-lg text-white placeholder-gray-600 text-sm focus:outline-none focus:border-pink-500 transition resize-y" required></textarea>
                         </div>
                     </div>
                     <button type="button" onclick="removeItem(this, '.itinerary-item')" class="text-gray-600 hover:text-red-400 mt-2 transition flex-shrink-0">
@@ -609,6 +614,27 @@
                 searchLocation();
             }
         });
+
+        // Form submission image validation
+        const tripForm = document.getElementById('tripForm');
+        if (tripForm) {
+            tripForm.addEventListener('submit', function(e) {
+                const imagesInput = document.getElementById('imagesInput');
+                if (!imagesInput.files || imagesInput.files.length === 0) {
+                    e.preventDefault();
+                    Swal.fire({
+                        title: 'Foto Belum Diisi',
+                        text: 'Harap isi foto trip terlebih dahulu sebelum disimpan.',
+                        icon: 'warning',
+                        confirmButtonColor: '#db2777', // pink-600
+                        confirmButtonText: 'OK',
+                        customClass: {
+                            popup: 'rounded-[1.5rem]'
+                        }
+                    });
+                }
+            });
+        }
 
         // Fix leaflet map rendering bug in hidden/flex layouts
         setTimeout(() => map.invalidateSize(), 500);

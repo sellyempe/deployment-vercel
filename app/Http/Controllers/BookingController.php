@@ -29,11 +29,24 @@ class BookingController extends Controller
         $this->midtransService = $midtransService;
     }
 
+    private function checkIsNotAdmin()
+    {
+        if (Auth::check() && Auth::user()->role === 'admin') {
+            return redirect()->route('admin.dashboard')
+                ->with('error', 'Akun Admin tidak diperbolehkan melakukan pemesanan trip.');
+        }
+        return null;
+    }
+
     /**
      * Show booking form untuk trip
      */
     public function create($tripId)
     {
+        if ($redirect = $this->checkIsNotAdmin()) {
+            return $redirect;
+        }
+
         $trip = Trip::with(['tripDates'])
             ->findOrFail($tripId);
 
@@ -56,12 +69,21 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
+        if ($redirect = $this->checkIsNotAdmin()) {
+            return $redirect;
+        }
+
         $validated = $request->validate([
             'trip_id' => 'required|exists:trips,id',
             'participants' => 'required|integer|min:1',
             'preferred_date' => 'required|date',
-            'phone' => 'required|string|min:10|max:15',
+            'phone' => 'required|regex:/^[0-9]+$/|min:10|max:13',
             'special_request' => 'nullable|string|max:500',
+        ], [
+            'phone.required' => 'Nomor telepon wajib diisi.',
+            'phone.regex' => 'Nomor telepon hanya boleh berisi angka.',
+            'phone.min' => 'Nomor telepon minimal harus terdiri dari 10 angka.',
+            'phone.max' => 'Nomor telepon maksimal harus terdiri dari 13 angka.',
         ]);
 
         $isValidDate = TripDate::where(
@@ -151,6 +173,10 @@ class BookingController extends Controller
      */
     public function confirmation($bookingId)
     {
+        if ($redirect = $this->checkIsNotAdmin()) {
+            return $redirect;
+        }
+
         $booking = Booking::with([
             'trip',
             'user',
@@ -276,6 +302,10 @@ class BookingController extends Controller
      */
     public function index()
     {
+        if ($redirect = $this->checkIsNotAdmin()) {
+            return $redirect;
+        }
+
         $user =
             User::find(
                 Auth::id()
@@ -307,6 +337,10 @@ class BookingController extends Controller
      */
     public function userDashboard()
     {
+        if ($redirect = $this->checkIsNotAdmin()) {
+            return $redirect;
+        }
+
         $user =
             User::find(
                 Auth::id()
@@ -348,6 +382,10 @@ class BookingController extends Controller
      */
     public function show($bookingId)
     {
+        if ($redirect = $this->checkIsNotAdmin()) {
+            return $redirect;
+        }
+
         $booking =
             Booking::with([
                 'trip',
@@ -395,6 +433,10 @@ class BookingController extends Controller
 
     public function downloadTicket($bookingId)
     {
+        if ($redirect = $this->checkIsNotAdmin()) {
+            return $redirect;
+        }
+
         $booking = Booking::with(['trip', 'user'])->findOrFail($bookingId);
 
         if (Auth::id() !== $booking->user_id) {
@@ -415,6 +457,10 @@ class BookingController extends Controller
      */
     public function cancel($bookingId)
     {
+        if ($redirect = $this->checkIsNotAdmin()) {
+            return $redirect;
+        }
+
         $booking =
             Booking::findOrFail(
                 $bookingId

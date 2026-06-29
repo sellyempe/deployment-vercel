@@ -4,10 +4,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Detail Booking - PinkTravel</title>
+    <title>Detail Booking - Pink Tour and Travel</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=poppins:300,400,500,600,700" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="font-poppins bg-gray-50/50 text-gray-900">
@@ -39,7 +40,7 @@
                                 @if ($booking->status === 'pending')
                                 <span
                                     class="px-4 py-2 bg-yellow-100 text-yellow-800 font-semibold rounded-full">Menunggu
-                                    Pembayaran</span>
+                                    Konfirmasi Pembayaran</span>
                                 @elseif ($booking->status === 'confirmed')
                                 <span
                                     class="px-4 py-2 bg-green-100 text-green-800 font-semibold rounded-full">Dikonfirmasi</span>
@@ -79,10 +80,7 @@
                             <div
                                 class="absolute top-0 right-0 w-64 h-64 bg-gray-100/50 rounded-full blur-3xl -mt-20 -mr-20 pointer-events-none">
                             </div>
-                            <h2
-                                class="text-2xl font-extrabold text-gray-900 mb-6 flex items-center gap-2 relative z-10">
-                                <span
-                                    class="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center shadow-sm text-pink-500 text-lg">🗺️</span>
+                            <h2 class="text-2xl font-extrabold text-gray-900 mb-6 relative z-10">
                                 Paket Wisata
                             </h2>
 
@@ -133,10 +131,7 @@
 
                         <div
                             class="bg-white rounded-[2rem] p-8 md:p-10 border border-gray-100 shadow-sm relative overflow-hidden">
-                            <h2
-                                class="text-2xl font-extrabold text-gray-900 mb-6 flex items-center gap-2 relative z-10">
-                                <span
-                                    class="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center shadow-sm text-pink-500 text-lg">📋</span>
+                            <h2 class="text-2xl font-extrabold text-gray-900 mb-6 relative z-10">
                                 Detail Pesanan
                             </h2>
 
@@ -186,10 +181,7 @@
 
                         <div
                             class="bg-white rounded-[2rem] p-8 md:p-10 border border-gray-100 shadow-sm relative overflow-hidden">
-                            <h2
-                                class="text-2xl font-extrabold text-gray-900 mb-6 flex items-center gap-2 relative z-10">
-                                <span
-                                    class="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center shadow-sm text-gray-500 text-lg">👤</span>
+                            <h2 class="text-2xl font-extrabold text-gray-900 mb-6 relative z-10">
                                 Data Pemesan
                             </h2>
 
@@ -207,6 +199,11 @@
                                 </div>
                             </div>
                         </div>
+
+                        @if (($booking->status === 'confirmed' || $booking->status === 'completed') && !$hasReviewed)
+                        @include('components.review-form', ['reviewableType' => 'App\Models\Trip', 'reviewableId' =>
+                        $booking->trip_id])
+                        @endif
                     </div>
 
                     <div class="lg:col-span-1">
@@ -217,21 +214,11 @@
                             @if ($booking->status === 'pending')
                             <div
                                 class="bg-gradient-to-br from-yellow-50 to-orange-50 border border-yellow-100 rounded-[1.5rem] p-6 relative overflow-hidden">
-                                <p class="text-yellow-800 font-bold mb-3 relative z-10 flex items-center gap-2">
-                                    <span
-                                        class="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-sm text-yellow-600 text-sm">⏳</span>
-                                    Belum Dilakukan
+                                <p class="text-yellow-800 font-bold mb-3 relative z-10">
+                                    Menunggu Konfirmasi Pembayaran
                                 </p>
-                                <p class="text-yellow-700 text-sm mb-6 relative z-10 font-medium">Silakan selesaikan
+                                <p class="text-yellow-700 text-sm relative z-10 font-medium">Silakan selesaikan
                                     pembayaran untuk mengkonfirmasi booking Anda.</p>
-                                <a href="{{ route('booking.confirmation', $booking->id) }}"
-                                    class="w-full flex items-center justify-center py-4 px-6 bg-yellow-500 text-white rounded-2xl font-bold hover:bg-yellow-600 transition-all shadow-lg shadow-yellow-500/30 hover:-translate-y-1 relative z-10 gap-2">
-                                    Bayar Sekarang
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                                    </svg>
-                                </a>
                             </div>
                             @elseif ($booking->status === 'confirmed')
                             <div
@@ -292,13 +279,14 @@
                             @elseif ($booking->status === 'cancelled')
                             <div
                                 class="bg-gradient-to-br from-red-50 to-rose-50 border border-red-100 rounded-[1.5rem] p-6 relative overflow-hidden">
-                                <p class="text-red-800 font-bold mb-3 relative z-10 flex items-center gap-2">
-                                    <span
-                                        class="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-sm text-red-600 text-sm">✗</span>
+                                <p class="text-red-800 font-bold mb-3 relative z-10">
                                     Booking Dibatalkan
                                 </p>
-                                <p class="text-red-700 text-sm relative z-10 font-medium">Booking ini telah dibatalkan.
-                                    Hubungi customer service untuk informasi lebih lanjut.</p>
+                                <p class="text-red-700 text-sm relative z-10 font-medium leading-relaxed">
+                                    Booking ini telah dibatalkan. Bagi pesanan yang telah dibayar, proses pengembalian
+                                    dana (refund) akan diproses secara manual. Silakan hubungi Customer Service kami
+                                    untuk konfirmasi rekening transfer pengembalian dana.
+                                </p>
                             </div>
                             @endif
 
@@ -321,8 +309,7 @@
 
                             @if ($booking->status === 'pending' || $booking->status === 'confirmed')
                             <div class="pt-4">
-                                <button
-                                    onclick="if(confirm('Apakah Anda yakin ingin membatalkan booking ini?')) { document.getElementById('cancel-form').submit(); }"
+                                <button onclick="cancelBooking()"
                                     class="w-full border-2 border-red-100 text-red-600 py-4 rounded-2xl font-bold hover:bg-red-50 hover:border-red-200 transition-all text-sm">
                                     Batalkan Booking
                                 </button>
@@ -331,6 +318,74 @@
                                     @csrf
                                 </form>
                             </div>
+
+                            <script>
+                            function cancelBooking() {
+                                Swal.fire({
+                                    title: 'Batalkan Booking Anda?',
+                                    html: `
+                                        <p style="color: #4b5563; font-size: 15px; margin-top: 10px; margin-bottom: 0; line-height: 1.5;">
+                                            Apakah Anda yakin ingin membatalkan pesanan ini?
+                                        </p>
+                                    `,
+                                    icon: 'warning',
+                                    iconColor: '#f43f5e',
+                                    showCancelButton: true,
+                                    confirmButtonText: 'Ya, Batalkan',
+                                    cancelButtonText: 'Kembali',
+                                    buttonsStyling: false,
+                                    didOpen: () => {
+                                        const popup = Swal.getPopup();
+                                        if (popup) {
+                                            popup.style.borderRadius = '2rem';
+                                            popup.style.padding = '30px';
+                                            popup.style.fontFamily = 'Poppins, sans-serif';
+
+                                            const title = popup.querySelector('.swal2-title');
+                                            if (title) {
+                                                title.style.fontSize = '22px';
+                                                title.style.fontWeight = '800';
+                                                title.style.color = '#111827';
+                                                title.style.padding = '0';
+                                            }
+
+                                            const confirmBtn = popup.querySelector('.swal2-confirm');
+                                            const cancelBtn = popup.querySelector('.swal2-cancel');
+                                            if (confirmBtn) {
+                                                confirmBtn.style.padding = '12px 24px';
+                                                confirmBtn.style.borderRadius = '12px';
+                                                confirmBtn.style.fontSize = '14px';
+                                                confirmBtn.style.fontWeight = 'bold';
+                                                confirmBtn.style.backgroundColor = '#f43f5e'; // rose-500
+                                                confirmBtn.style.color = '#ffffff';
+                                                confirmBtn.style.border = 'none';
+                                                confirmBtn.style.boxShadow =
+                                                    '0 4px 6px -1px rgba(244, 63, 94, 0.2)';
+                                                confirmBtn.style.cursor = 'pointer';
+                                                confirmBtn.style.margin = '0 8px';
+                                                confirmBtn.style.transition = 'all 0.2s';
+                                            }
+                                            if (cancelBtn) {
+                                                cancelBtn.style.padding = '12px 24px';
+                                                cancelBtn.style.borderRadius = '12px';
+                                                cancelBtn.style.fontSize = '14px';
+                                                cancelBtn.style.fontWeight = 'bold';
+                                                cancelBtn.style.backgroundColor = '#f3f4f6'; // gray-100
+                                                cancelBtn.style.color = '#4b5563'; // gray-600
+                                                cancelBtn.style.border = 'none';
+                                                cancelBtn.style.cursor = 'pointer';
+                                                cancelBtn.style.margin = '0 8px';
+                                                cancelBtn.style.transition = 'all 0.2s';
+                                            }
+                                        }
+                                    }
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        document.getElementById('cancel-form').submit();
+                                    }
+                                });
+                            }
+                            </script>
                             @endif
                         </div>
                     </div>

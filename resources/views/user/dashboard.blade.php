@@ -42,16 +42,20 @@
 
                 <div class="bg-white border-b border-gray-200 rounded-t-lg">
                     <div class="flex space-x-8 px-6 overflow-x-auto">
-                        <button onclick="switchTab('dashboard', this)" class="tab-link active-tab px-4 py-4 text-gray-900 font-medium border-b-2 border-pink-600 whitespace-nowrap">
+                        <button onclick="switchTab('dashboard', this)"
+                            class="tab-link active-tab px-4 py-4 text-gray-900 font-medium border-b-2 border-pink-600 whitespace-nowrap">
                             📊 Ringkasan
                         </button>
-                        <button onclick="switchTab('bookings', this)" class="tab-link px-4 py-4 text-gray-700 font-medium border-b-2 border-transparent hover:text-gray-900 whitespace-nowrap">
+                        <button onclick="switchTab('bookings', this)"
+                            class="tab-link px-4 py-4 text-gray-700 font-medium border-b-2 border-transparent hover:text-gray-900 whitespace-nowrap">
                             📋 Pesanan Saya
                         </button>
-                        <button onclick="switchTab('wishlist', this)" class="tab-link px-4 py-4 text-gray-700 font-medium border-b-2 border-transparent hover:text-gray-900 whitespace-nowrap">
+                        <button onclick="switchTab('wishlist', this)"
+                            class="tab-link px-4 py-4 text-gray-700 font-medium border-b-2 border-transparent hover:text-gray-900 whitespace-nowrap">
                             ❤️ Wishlist
                         </button>
-                        <button onclick="switchTab('profile', this)" class="tab-link px-4 py-4 text-gray-700 font-medium border-b-2 border-transparent hover:text-gray-900 whitespace-nowrap">
+                        <button onclick="switchTab('profile', this)"
+                            class="tab-link px-4 py-4 text-gray-700 font-medium border-b-2 border-transparent hover:text-gray-900 whitespace-nowrap">
                             👤 Profil
                         </button>
                     </div>
@@ -81,17 +85,19 @@
                         <h3 class="text-xl font-bold text-gray-900 mb-4">Aktivitas Terbaru</h3>
                         <div class="space-y-4">
                             @forelse ($recentBookings as $booking)
-                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
+                            <div
+                                class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
                                 <div class="flex items-center space-x-4 flex-1">
                                     @php
                                     $badgeClass = match($booking->status) {
-                                        'confirmed' => 'bg-green-100 text-green-800',
-                                        'pending' => 'bg-yellow-100 text-yellow-800',
-                                        'completed' => 'bg-blue-100 text-blue-800',
-                                        default => 'bg-red-100 text-red-800',
+                                    'confirmed' => 'bg-green-100 text-green-800',
+                                    'pending' => 'bg-yellow-100 text-yellow-800',
+                                    'completed' => 'bg-blue-100 text-blue-800',
+                                    default => 'bg-red-100 text-red-800',
                                     };
                                     @endphp
-                                    <span class="px-3 py-1 rounded-full text-xs font-semibold {{ $badgeClass }} flex-shrink-0">
+                                    <span
+                                        class="px-3 py-1 rounded-full text-xs font-semibold {{ $badgeClass }} flex-shrink-0">
                                         {{ strtoupper($booking->status) }}
                                     </span>
                                     <div class="flex-1 min-w-0">
@@ -104,7 +110,8 @@
                                 <div class="text-right ml-4">
                                     <p class="font-semibold text-gray-900">Rp
                                         {{ number_format($booking->total_price, 0, ',', '.') }}</p>
-                                    <a href="{{ route('booking.show', $booking->id) }}" class="text-pink-600 hover:text-pink-900 text-xs font-medium">Detail →</a>
+                                    <a href="{{ route('booking.show', $booking->id) }}"
+                                        class="text-pink-600 hover:text-pink-900 text-xs font-medium">Detail →</a>
                                 </div>
                             </div>
                             @empty
@@ -117,7 +124,8 @@
 
                         @if ($stats['total'] > 5)
                         <div class="mt-4 text-center">
-                            <a href="{{ route('booking.index') }}" class="text-pink-600 hover:text-pink-700 font-medium text-sm">
+                            <a href="{{ route('booking.index') }}"
+                                class="text-pink-600 hover:text-pink-700 font-medium text-sm">
                                 Lihat semua {{ $stats['total'] }} pesanan →
                             </a>
                         </div>
@@ -127,18 +135,22 @@
                     <div id="bookings-tab" class="tab-content hidden p-6">
                         <div class="flex items-center justify-between mb-4">
                             <h3 class="text-xl font-bold text-gray-900">Pesanan Saya</h3>
-                            <a href="{{ route('booking.index') }}" class="text-sm text-pink-600 hover:text-pink-700 font-medium">
+                            <a href="{{ route('booking.index') }}"
+                                class="text-sm text-pink-600 hover:text-pink-700 font-medium">
                                 Lihat semua →
                             </a>
                         </div>
                         <div class="space-y-4">
                             @forelse ($recentBookings as $booking)
-                            <div class="flex items-start justify-between p-5 border border-gray-200 rounded-lg hover:shadow-md transition">
+                            <div
+                                class="flex items-start justify-between p-5 border border-gray-200 rounded-lg hover:shadow-md transition">
                                 <div class="flex items-center space-x-4 flex-1">
                                     @if ($booking->trip && $booking->trip->image)
-                                    <img src="{{ $booking->trip->image }}" alt="{{ $booking->trip->title }}" class="w-20 h-20 rounded-lg object-cover flex-shrink-0">
+                                    <img src="{{ $booking->trip->image }}" alt="{{ $booking->trip->title }}"
+                                        class="w-20 h-20 rounded-lg object-cover flex-shrink-0">
                                     @else
-                                    <div class="w-20 h-20 bg-pink-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <div
+                                        class="w-20 h-20 bg-pink-100 rounded-lg flex items-center justify-center flex-shrink-0">
                                         <span class="text-3xl">✈️</span>
                                     </div>
                                     @endif
@@ -153,24 +165,27 @@
                                 <div class="text-right ml-4 flex-shrink-0">
                                     @php
                                     $badgeClass = match($booking->status) {
-                                        'confirmed' => 'bg-green-100 text-green-800',
-                                        'pending' => 'bg-yellow-100 text-yellow-800',
-                                        'completed' => 'bg-blue-100 text-blue-800',
-                                        default => 'bg-red-100 text-red-800',
+                                    'confirmed' => 'bg-green-100 text-green-800',
+                                    'pending' => 'bg-yellow-100 text-yellow-800',
+                                    'completed' => 'bg-blue-100 text-blue-800',
+                                    default => 'bg-red-100 text-red-800',
                                     };
                                     @endphp
-                                    <span class="px-3 py-1 rounded-full text-xs font-semibold {{ $badgeClass }} block mb-2">
+                                    <span
+                                        class="px-3 py-1 rounded-full text-xs font-semibold {{ $badgeClass }} block mb-2">
                                         {{ ucfirst($booking->status) }}
                                     </span>
                                     <p class="font-bold text-gray-900">Rp
                                         {{ number_format($booking->total_price, 0, ',', '.') }}</p>
-                                    <a href="{{ route('booking.show', $booking->id) }}" class="text-pink-600 hover:text-pink-900 text-sm font-medium">Detail →</a>
+                                    <a href="{{ route('booking.show', $booking->id) }}"
+                                        class="text-pink-600 hover:text-pink-900 text-sm font-medium">Detail →</a>
                                 </div>
                             </div>
                             @empty
                             <div class="text-center py-12 bg-gray-50 rounded-lg">
                                 <p class="text-gray-500 mb-2">Belum ada pemesanan</p>
-                                <a href="/" class="text-pink-600 hover:text-pink-900 font-medium">Cari paket wisata →</a>
+                                <a href="/" class="text-pink-600 hover:text-pink-900 font-medium">Cari paket wisata
+                                    →</a>
                             </div>
                             @endforelse
                         </div>
@@ -191,27 +206,32 @@
                                 <div class="space-y-4">
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
-                                        <input type="text" value="{{ $user->name }}" disabled class="w-full px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg text-gray-900">
+                                        <input type="text" value="{{ $user->name }}" disabled
+                                            class="w-full px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg text-gray-900">
                                     </div>
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                                        <input type="email" value="{{ $user->email }}" disabled class="w-full px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg text-gray-900">
+                                        <input type="email" value="{{ $user->email }}" disabled
+                                            class="w-full px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg text-gray-900">
                                     </div>
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-1">Member Sejak</label>
-                                        <input type="text" value="{{ $user->created_at->format('d M Y') }}" disabled class="w-full px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg text-gray-900">
+                                        <input type="text" value="{{ $user->created_at->format('d M Y') }}" disabled
+                                            class="w-full px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg text-gray-900">
                                     </div>
                                 </div>
                             </div>
                             <div>
                                 <h4 class="font-semibold text-lg text-gray-900 mb-4">Aksi</h4>
                                 <div class="space-y-3">
-                                    <a href="{{ route('booking.index') }}" class="w-full flex items-center justify-center px-4 py-3 bg-pink-600 text-white rounded-lg hover:bg-pink-700 font-medium transition">
+                                    <a href="{{ route('booking.index') }}"
+                                        class="w-full flex items-center justify-center px-4 py-3 bg-pink-600 text-white rounded-lg hover:bg-pink-700 font-medium transition">
                                         📋 Lihat Semua Pesanan
                                     </a>
                                     <form method="POST" action="{{ route('logout') }}" class="w-full">
                                         @csrf
-                                        <button type="submit" class="w-full px-4 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium transition">
+                                        <button type="submit"
+                                            class="w-full px-4 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium transition">
                                             🚪 Keluar
                                         </button>
                                     </form>
@@ -230,17 +250,17 @@
     document.addEventListener('DOMContentLoaded', () => {
         const successAlert = document.getElementById('successAlert');
         const errorAlert = document.getElementById('errorAlert');
-        
+
         if (successAlert) {
-            const key = 'msg_' + btoa('{{ session("success") }}').substring(0,16);
+            const key = 'msg_' + btoa('{{ session("success") }}').substring(0, 16);
             if (!sessionStorage.getItem(key)) {
                 successAlert.classList.remove('hidden');
                 sessionStorage.setItem(key, 'shown');
             }
         }
-        
+
         if (errorAlert) {
-            const key = 'msg_' + btoa('{{ session("error") }}').substring(0,16);
+            const key = 'msg_' + btoa('{{ session("error") }}').substring(0, 16);
             if (!sessionStorage.getItem(key)) {
                 errorAlert.classList.remove('hidden');
                 sessionStorage.setItem(key, 'shown');
@@ -332,4 +352,4 @@
     </script>
 </body>
 
-</html>',file_path:
+</html>

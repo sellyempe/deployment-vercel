@@ -74,4 +74,14 @@ class Trip extends Model
     {
         return $this->morphMany(Image::class, 'imageable');
     }
+
+    public function getTotalKuotaAttribute()
+    {
+        return $this->tripDates()->sum('kuota');
+    }
+
+    public function getTotalBookedAttribute()
+    {
+        return $this->bookings()->whereIn('status', ['pending', 'confirmed'])->sum('participants');
+    }
 }

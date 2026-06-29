@@ -122,27 +122,217 @@
                     </div>
                 </div>
 
+                <div class="bg-[#16476A] border border-white/5 rounded-2xl p-6 mt-5">
+                    <div class="flex items-center justify-between mb-5">
+                        <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wider">Itinerary Perjalanan
+                        </h3>
+                        <button type="button" onclick="addItinerary()"
+                            class="flex items-center gap-1.5 px-3 py-1.5 bg-pink-600/20 hover:bg-pink-600/30 text-pink-400 text-xs font-semibold rounded-lg transition">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 4v16m8-8H4" />
+                            </svg>
+                            Tambah Hari
+                        </button>
+                    </div>
+                    <div id="itineraries" class="space-y-3">
+                        @forelse($trip->itineraries as $index => $itinerary)
+                        <div class="itinerary-item bg-gray-800 border border-white/5 rounded-xl p-4">
+                            <div class="flex items-start gap-4">
+                                <div
+                                    class="flex-shrink-0 w-10 h-10 bg-pink-600/20 rounded-lg flex items-center justify-center">
+                                    <span
+                                        class="text-pink-400 font-bold text-sm day-label">{{ $itinerary->day_number }}</span>
+                                </div>
+                                <div class="flex-1 grid grid-cols-2 gap-3">
+                                    <div>
+                                        <label class="block text-xs font-medium text-gray-500 mb-1">Judul Hari</label>
+                                        <input type="text" name="itineraries[{{ $index }}][title]"
+                                            value="{{ old("itineraries.$index.title", $itinerary->title) }}"
+                                            placeholder="e.g. Keberangkatan & Tiba"
+                                            class="w-full px-3 py-2 bg-gray-750 border border-white/10 rounded-lg text-white placeholder-gray-600 text-sm focus:outline-none focus:border-pink-500 transition"
+                                            required>
+                                        <input type="hidden" name="itineraries[{{ $index }}][day_number]"
+                                            value="{{ $itinerary->day_number }}">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-medium text-gray-500 mb-1">Deskripsi</label>
+                                        <textarea name="itineraries[{{ $index }}][description]"
+                                            placeholder="Aktivitas hari ini..." rows="2"
+                                            class="w-full px-3 py-2 bg-gray-750 border border-white/10 rounded-lg text-white placeholder-gray-600 text-sm focus:outline-none focus:border-pink-500 transition resize-y"
+                                            required>{{ old("itineraries.$index.description", $itinerary->description) }}</textarea>
+                                    </div>
+                                </div>
+                                <button type="button" onclick="removeItem(this, '.itinerary-item')"
+                                    class="text-gray-600 hover:text-red-400 mt-2 transition flex-shrink-0">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        @empty
+                        <div class="itinerary-item bg-gray-800 border border-white/5 rounded-xl p-4">
+                            <div class="flex items-start gap-4">
+                                <div
+                                    class="flex-shrink-0 w-10 h-10 bg-pink-600/20 rounded-lg flex items-center justify-center">
+                                    <span class="text-pink-400 font-bold text-sm day-label">1</span>
+                                </div>
+                                <div class="flex-1 grid grid-cols-2 gap-3">
+                                    <div>
+                                        <label class="block text-xs font-medium text-gray-500 mb-1">Judul Hari</label>
+                                        <input type="text" name="itineraries[0][title]"
+                                            placeholder="e.g. Keberangkatan & Tiba"
+                                            class="w-full px-3 py-2 bg-gray-750 border border-white/10 rounded-lg text-white placeholder-gray-600 text-sm focus:outline-none focus:border-pink-500 transition"
+                                            required>
+                                        <input type="hidden" name="itineraries[0][day_number]" value="1">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-medium text-gray-500 mb-1">Deskripsi</label>
+                                        <textarea name="itineraries[0][description]" placeholder="Aktivitas hari ini..."
+                                            rows="2"
+                                            class="w-full px-3 py-2 bg-gray-750 border border-white/10 rounded-lg text-white placeholder-gray-600 text-sm focus:outline-none focus:border-pink-500 transition resize-y"
+                                            required></textarea>
+                                    </div>
+                                </div>
+                                <button type="button" onclick="removeItem(this, '.itinerary-item')"
+                                    class="text-gray-600 hover:text-red-400 mt-2 transition flex-shrink-0">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        @endforelse
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-5 mt-5">
+                    <div class="bg-[#16476A] border border-white/5 rounded-2xl p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-sm font-semibold text-emerald-400 flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
+                                </svg>
+                                Sudah Termasuk
+                            </h3>
+                            <button type="button" onclick="addInclude()"
+                                class="text-emerald-400 hover:text-emerald-300 text-xs font-semibold transition">+
+                                Tambah</button>
+                        </div>
+                        <div id="includes" class="space-y-2">
+                            @forelse($trip->includes as $index => $include)
+                            <div class="include-item flex items-center gap-2">
+                                <input type="text" name="includes[{{ $index }}][item_name]"
+                                    value="{{ old("includes.$index.item_name", $include->item_name) }}"
+                                    placeholder="e.g. Tiket Pesawat"
+                                    class="flex-1 px-3 py-2 bg-gray-800 border border-white/10 rounded-lg text-white placeholder-gray-600 text-sm focus:outline-none focus:border-emerald-500 transition"
+                                    required>
+                                <input type="hidden" name="includes[{{ $index }}][category]"
+                                    value="{{ $include->category ?? 'general' }}">
+                                <button type="button" onclick="removeItem(this, '.include-item')"
+                                    class="text-gray-600 hover:text-red-400 transition">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                            </div>
+                            @empty
+                            <div class="include-item flex items-center gap-2">
+                                <input type="text" name="includes[0][item_name]" placeholder="e.g. Tiket Pesawat"
+                                    class="flex-1 px-3 py-2 bg-gray-800 border border-white/10 rounded-lg text-white placeholder-gray-600 text-sm focus:outline-none focus:border-emerald-500 transition"
+                                    required>
+                                <input type="hidden" name="includes[0][category]" value="general">
+                                <button type="button" onclick="removeItem(this, '.include-item')"
+                                    class="text-gray-600 hover:text-red-400 transition">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                            </div>
+                            @endforelse
+                        </div>
+                    </div>
+
+                    <div class="bg-[#16476A] border border-white/5 rounded-2xl p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-sm font-semibold text-red-400 flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                                Tidak Termasuk
+                            </h3>
+                            <button type="button" onclick="addExclude()"
+                                class="text-red-400 hover:text-red-300 text-xs font-semibold transition">+
+                                Tambah</button>
+                        </div>
+                        <div id="excludes" class="space-y-2">
+                            @forelse($trip->excludes as $index => $exclude)
+                            <div class="exclude-item flex items-center gap-2">
+                                <input type="text" name="excludes[{{ $index }}][item_name]"
+                                    value="{{ old("excludes.$index.item_name", $exclude->item_name) }}"
+                                    placeholder="e.g. Tips Guide"
+                                    class="flex-1 px-3 py-2 bg-gray-800 border border-white/10 rounded-lg text-white placeholder-gray-600 text-sm focus:outline-none focus:border-red-500 transition"
+                                    required>
+                                <input type="hidden" name="excludes[{{ $index }}][category]"
+                                    value="{{ $exclude->category ?? 'general' }}">
+                                <button type="button" onclick="removeItem(this, '.exclude-item')"
+                                    class="text-gray-600 hover:text-red-400 transition">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                            </div>
+                            @empty
+                            <div class="exclude-item flex items-center gap-2">
+                                <input type="text" name="excludes[0][item_name]" placeholder="e.g. Tips Guide"
+                                    class="flex-1 px-3 py-2 bg-gray-800 border border-white/10 rounded-lg text-white placeholder-gray-600 text-sm focus:outline-none focus:border-red-500 transition"
+                                    required>
+                                <input type="hidden" name="excludes[0][category]" value="general">
+                                <button type="button" onclick="removeItem(this, '.exclude-item')"
+                                    class="text-gray-600 hover:text-red-400 transition">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                            </div>
+                            @endforelse
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
             <div class="space-y-5">
 
                 <div class="bg-[#16476A] border border-white/5 rounded-2xl p-6">
                     <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">Galeri Trip</h3>
-                    
+
                     @if($trip->images->count() > 0)
                     <div class="grid grid-cols-3 md:grid-cols-4 gap-3 mb-6">
                         @foreach($trip->images as $img)
                         <div class="relative aspect-square rounded-xl overflow-hidden bg-gray-800 group shadow-lg">
                             <img src="{{ format_image_url($img->path) }}" class="w-full h-full object-cover">
-                            <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center transition gap-2">
+                            <div
+                                class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center transition gap-2">
                                 @if($img->path === $trip->image)
-                                <span class="bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow-sm">SAMPUL</span>
+                                <span
+                                    class="bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow-sm">SAMPUL</span>
                                 @endif
-                                <button type="button" 
+                                <button type="button"
                                     onclick="if(confirm('Hapus foto ini dari galeri?')) { document.getElementById('delete-img-{{ $img->id }}').submit(); }"
                                     class="bg-red-500 hover:bg-red-600 text-white p-1.5 rounded-lg transition shadow-md">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                     </svg>
                                 </button>
                             </div>
@@ -152,7 +342,8 @@
                     @endif
 
                     @foreach($trip->images as $img)
-                    <form id="delete-img-{{ $img->id }}" action="{{ route('admin.images.destroy', $img->id) }}" method="POST" class="hidden">
+                    <form id="delete-img-{{ $img->id }}" action="{{ route('admin.images.destroy', $img->id) }}"
+                        method="POST" class="hidden">
                         @csrf @method('DELETE')
                     </form>
                     @endforeach
@@ -164,9 +355,11 @@
                             <!-- Previews will be injected here -->
                         </div>
                         <div id="imagesPlaceholder">
-                            <div class="w-12 h-12 bg-gray-800 rounded-xl flex items-center justify-center mx-auto mb-3 text-pink-500">
+                            <div
+                                class="w-12 h-12 bg-gray-800 rounded-xl flex items-center justify-center mx-auto mb-3 text-pink-500">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 4v16m8-8H4" />
                                 </svg>
                             </div>
                             <p class="text-sm text-gray-400 font-medium">Tambah Foto Baru</p>
@@ -295,7 +488,7 @@
                     Simpan Perubahan
                 </button>
                 <a href="{{ route('admin.dashboard') }}"
-                    class="block w-full text-center px-6 py-3 bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white font-medium rounded-xl transition">
+                    class="block w-full text-center px-6 py-3 bg-gray-100 hover:bg-gray-250 text-gray-600 hover:text-gray-800 border border-gray-200/50 font-medium rounded-xl transition">
                     Batal
                 </a>
             </div>
@@ -303,9 +496,115 @@
     </form>
 
     <script>
+    let itineraryCount = {
+            {
+                max(1, count($trip - > itineraries))
+            }
+        },
+        includeCount = {
+            {
+                max(1, count($trip - > includes))
+            }
+        },
+        excludeCount = {
+            {
+                max(1, count($trip - > excludes))
+            }
+        };
+
     function removeItem(el, selector) {
         const item = el.closest(selector);
-        if (item) item.remove();
+        if (item) {
+            item.remove();
+            if (selector === '.itinerary-item') {
+                reindexItineraries();
+            }
+        }
+    }
+
+    function reindexItineraries() {
+        const items = document.querySelectorAll('#itineraries .itinerary-item');
+        items.forEach((item, idx) => {
+            const dayLabel = item.querySelector('.day-label');
+            if (dayLabel) dayLabel.textContent = idx + 1;
+
+            const titleInput = item.querySelector('input[name^="itineraries"][name$="[title]"]');
+            if (titleInput) titleInput.name = `itineraries[${idx}][title]`;
+
+            const descInput = item.querySelector('textarea[name^="itineraries"][name$="[description]"]');
+            if (descInput) descInput.name = `itineraries[${idx}][description]`;
+
+            const dayInput = item.querySelector('input[name^="itineraries"][name$="[day_number]"]');
+            if (dayInput) {
+                dayInput.name = `itineraries[${idx}][day_number]`;
+                dayInput.value = idx + 1;
+            }
+        });
+        itineraryCount = items.length;
+    }
+
+    function addItinerary() {
+        const container = document.getElementById('itineraries');
+        const idx = itineraryCount;
+        container.insertAdjacentHTML('beforeend', `
+            <div class="itinerary-item bg-gray-800 border border-white/5 rounded-xl p-4">
+                <div class="flex items-start gap-4">
+                    <div class="flex-shrink-0 w-10 h-10 bg-pink-600/20 rounded-lg flex items-center justify-center">
+                        <span class="text-pink-400 font-bold text-sm day-label">${idx + 1}</span>
+                    </div>
+                    <div class="flex-1 grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500 mb-1">Judul Hari</label>
+                            <input type="text" name="itineraries[${idx}][title]" placeholder="e.g. Snorkeling & Pantai"
+                                   class="w-full px-3 py-2 bg-gray-750 border border-white/10 rounded-lg text-white placeholder-gray-600 text-sm focus:outline-none focus:border-pink-500 transition" required>
+                            <input type="hidden" name="itineraries[${idx}][day_number]" value="${idx + 1}">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500 mb-1">Deskripsi</label>
+                            <textarea name="itineraries[${idx}][description]" placeholder="Aktivitas hari ini..." rows="2"
+                                      class="w-full px-3 py-2 bg-gray-750 border border-white/10 rounded-lg text-white placeholder-gray-600 text-sm focus:outline-none focus:border-pink-500 transition resize-y" required></textarea>
+                        </div>
+                    </div>
+                    <button type="button" onclick="removeItem(this, '.itinerary-item')" class="text-gray-600 hover:text-red-400 mt-2 transition flex-shrink-0">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>`);
+        itineraryCount++;
+    }
+
+    function addInclude() {
+        const container = document.getElementById('includes');
+        container.insertAdjacentHTML('beforeend', `
+            <div class="include-item flex items-center gap-2">
+                <input type="text" name="includes[${includeCount}][item_name]" placeholder="e.g. Akomodasi"
+                       class="flex-1 px-3 py-2 bg-gray-800 border border-white/10 rounded-lg text-white placeholder-gray-600 text-sm focus:outline-none focus:border-emerald-500 transition" required>
+                <input type="hidden" name="includes[${includeCount}][category]" value="general">
+                <button type="button" onclick="removeItem(this, '.include-item')" class="text-gray-600 hover:text-red-400 transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>`);
+        includeCount++;
+    }
+
+    function addExclude() {
+        const container = document.getElementById('excludes');
+        container.insertAdjacentHTML('beforeend', `
+            <div class="exclude-item flex items-center gap-2">
+                <input type="text" name="excludes[${excludeCount}][item_name]" placeholder="e.g. Tips Guide"
+                       class="flex-1 px-3 py-2 bg-gray-800 border border-white/10 rounded-lg text-white placeholder-gray-600 text-sm focus:outline-none focus:border-red-500 transition" required>
+                <input type="hidden" name="excludes[${excludeCount}][category]" value="general">
+                <button type="button" onclick="removeItem(this, '.exclude-item')" class="text-gray-600 hover:text-red-400 transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>`);
+        excludeCount++;
     }
 
     document.getElementById('addDateBtn').addEventListener('click', function() {
@@ -351,11 +650,11 @@
         const wrap = document.getElementById('imagesPreviewWrap');
         const placeholder = document.getElementById('imagesPlaceholder');
         wrap.innerHTML = '';
-        
+
         if (input.files && input.files.length > 0) {
             wrap.classList.remove('hidden');
             placeholder.classList.add('hidden');
-            
+
             Array.from(input.files).forEach(file => {
                 const reader = new FileReader();
                 reader.onload = e => {

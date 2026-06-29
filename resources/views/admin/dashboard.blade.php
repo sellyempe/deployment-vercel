@@ -82,7 +82,7 @@
                         <div class="flex items-center gap-3">
                             <div class="w-12 h-12 rounded-xl overflow-hidden bg-[#132440] flex-shrink-0">
                                 @if($trip->image)
-                                <img src="{{ format_image_url($trip->image) }}" alt="{{ $trip->title }}"
+                                <img src="{{ $trip->image }}" alt="{{ $trip->title }}"
                                     class="w-full h-full object-cover">
                                 @endif
                             </div>
@@ -120,10 +120,10 @@
                     </td>
                     <td class="px-5 py-4">
                         <span class="font-semibold text-white">
-                            {{ $trip->bookings_count }}
+                            {{ $trip->total_booked }}
                         </span>
                         <span class="text-white/60 text-xs ml-1">
-                            / {{ $trip->kuota ?? '∞' }}
+                            / {{ $trip->total_kuota }}
                         </span>
                     </td>
                     <td class="px-5 py-4">

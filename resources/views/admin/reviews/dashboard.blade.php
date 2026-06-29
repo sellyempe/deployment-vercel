@@ -130,14 +130,17 @@
                             @endif
                         </td>
                         <td class="px-6 py-6 text-right">
-                            <form action="{{ route('admin.reviews.approve', $review->id) }}" method="POST" class="flex items-center justify-end">
+                            <form
+                                action="{{ $review->status == 'approved' ? route('admin.reviews.reject', $review->id) : route('admin.reviews.approve', $review->id) }}"
+                                method="POST" class="flex items-center justify-end">
                                 @csrf @method('PUT')
                                 <label class="relative inline-flex items-center cursor-pointer">
-                                    <input type="checkbox" name="status" value="approved" 
-                                           onchange="this.form.submit()"
-                                           {{ $review->status == 'approved' ? 'checked' : '' }} 
-                                           class="sr-only peer">
-                                    <div class="w-11 h-6 bg-gray-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
+                                    <input type="checkbox" name="status" value="approved"
+                                        onchange="this.form.action = this.checked ? '{{ route('admin.reviews.approve', $review->id) }}' : '{{ route('admin.reviews.reject', $review->id) }}'; this.form.submit()"
+                                        {{ $review->status == 'approved' ? 'checked' : '' }} class="sr-only peer">
+                                    <div
+                                        class="w-11 h-6 bg-gray-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500">
+                                    </div>
                                 </label>
                             </form>
                         </td>

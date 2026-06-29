@@ -149,7 +149,7 @@ class TripController extends Controller
 
             $imagePath =
                 $request->file('image')
-                    ->store('images', 'public');
+                ->store('images', 'public');
 
             $validated['image'] =
                 $imagePath;
@@ -190,7 +190,7 @@ class TripController extends Controller
                 $path = $file->store('images', 'public');
                 $trip->images()->create(['path' => $path]);
             }
-        } else if ($validated['image']) {
+        } elseif ($validated['image']) {
             // Jika ada image utama tapi tidak ada gallery, masukkan image utama ke gallery sebagai primary
             $trip->images()->create([
                 'path' => $validated['image'],
@@ -206,9 +206,7 @@ class TripController extends Controller
             ) {
 
                 if (
-                    ! empty(
-                        $itinerary['title']
-                    )
+                    ! empty($itinerary['title'])
                 ) {
 
                     TripItinerary::create([
@@ -232,9 +230,7 @@ class TripController extends Controller
             ) {
 
                 if (
-                    ! empty(
-                        $include['item_name']
-                    )
+                    ! empty($include['item_name'])
                 ) {
 
                     TripInclude::create([
@@ -257,9 +253,7 @@ class TripController extends Controller
             ) {
 
                 if (
-                    ! empty(
-                        $exclude['item_name']
-                    )
+                    ! empty($exclude['item_name'])
                 ) {
 
                     TripExclude::create([
@@ -351,7 +345,7 @@ class TripController extends Controller
             if (
                 $trip->image &&
                 Storage::disk('public')
-                    ->exists($trip->image)
+                ->exists($trip->image)
             ) {
 
                 Storage::disk('public')
@@ -361,7 +355,7 @@ class TripController extends Controller
             // upload baru
             $imagePath =
                 $request->file('image')
-                    ->store('images', 'public');
+                ->store('images', 'public');
 
             $validated['image'] =
                 $imagePath;
@@ -397,7 +391,7 @@ class TripController extends Controller
         if (
             $trip->image &&
             Storage::disk('public')
-                ->exists($trip->image)
+            ->exists($trip->image)
         ) {
 
             Storage::disk('public')

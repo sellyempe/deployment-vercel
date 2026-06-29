@@ -10,21 +10,50 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
     @keyframes heroZoom {
-        from { transform: scale(1.08); }
-        to { transform: scale(1); }
+        from {
+            transform: scale(1.08);
+        }
+
+        to {
+            transform: scale(1);
+        }
     }
 
     @keyframes fadeSlideUp {
-        from { opacity: 0; transform: translateY(30px); }
-        to { opacity: 1; transform: translateY(0); }
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
-    .hero-zoom { animation: heroZoom 8s ease-out forwards; }
-    .hero-fade-1 { animation: fadeSlideUp 0.8s ease-out 0.2s both; }
-    .hero-fade-2 { animation: fadeSlideUp 0.8s ease-out 0.4s both; }
-    .hero-fade-3 { animation: fadeSlideUp 0.8s ease-out 0.6s both; }
-    .hero-fade-4 { animation: fadeSlideUp 0.8s ease-out 0.8s both; }
-    .hero-fade-5 { animation: fadeSlideUp 0.8s ease-out 1.0s both; }
+    .hero-zoom {
+        animation: heroZoom 8s ease-out forwards;
+    }
+
+    .hero-fade-1 {
+        animation: fadeSlideUp 0.8s ease-out 0.2s both;
+    }
+
+    .hero-fade-2 {
+        animation: fadeSlideUp 0.8s ease-out 0.4s both;
+    }
+
+    .hero-fade-3 {
+        animation: fadeSlideUp 0.8s ease-out 0.6s both;
+    }
+
+    .hero-fade-4 {
+        animation: fadeSlideUp 0.8s ease-out 0.8s both;
+    }
+
+    .hero-fade-5 {
+        animation: fadeSlideUp 0.8s ease-out 1.0s both;
+    }
 
     .reveal {
         opacity: 0;
@@ -57,7 +86,8 @@
 
 <body class="font-poppins bg-white text-[#1e293b]">
     @if(session('success'))
-    <div id="successPopup" class="fixed top-6 right-6 z-[9999] bg-white border border-pink-100 rounded-[28px] shadow-[0_12px_40px_rgba(2,6,23,0.10)] p-5 w-[360px] transition-all duration-300 hidden opacity-0 translate-y-[-10px]">
+    <div id="successPopup"
+        class="fixed top-6 right-6 z-[9999] bg-white border border-pink-100 rounded-[28px] shadow-[0_12px_40px_rgba(2,6,23,0.10)] p-5 w-[360px] transition-all duration-300 hidden opacity-0 translate-y-[-10px]">
         <div class="flex items-start gap-4">
             <div class="w-14 h-14 rounded-2xl bg-pink-50 flex items-center justify-center flex-shrink-0">
                 <div class="w-10 h-10 rounded-full bg-pink-500 flex items-center justify-center">
@@ -80,7 +110,7 @@
         </div>
     </div>
     @php
-        session()->forget(['success', 'success_title', 'success_type']);
+    session()->forget(['success', 'success_title', 'success_type']);
     @endphp
     @endif
 
@@ -90,21 +120,23 @@
         if (!popup) return;
         popup.style.opacity = '0';
         popup.style.transform = 'translateY(-10px)';
-        setTimeout(() => { popup.remove(); }, 300);
+        setTimeout(() => {
+            popup.remove();
+        }, 300);
     }
 
     document.addEventListener('DOMContentLoaded', function() {
         const popup = document.getElementById('successPopup');
         if (popup) {
             const msgKey = 'msg_' + btoa('{{ session("success") }}').substring(0, 16);
-            
+
             if (!sessionStorage.getItem(msgKey)) {
                 popup.classList.remove('hidden');
                 setTimeout(() => {
                     popup.style.opacity = '1';
                     popup.style.transform = 'translateY(0)';
                 }, 100);
-                
+
                 sessionStorage.setItem(msgKey, 'shown');
                 setTimeout(closePopup, 3500);
             } else {
@@ -120,7 +152,7 @@
         }
     });
     </script>
-    
+
     <div>
         <x-navbar></x-navbar>
 
@@ -134,7 +166,8 @@
             </div>
 
             <div class="relative z-10 max-w-5xl mx-auto px-4 text-center">
-                <div class="hero-fade-1 inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-white text-sm font-medium mb-8">
+                <div
+                    class="hero-fade-1 inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-white text-sm font-medium mb-8">
                     Open Trip Banda Neira
                 </div>
 
@@ -151,12 +184,8 @@
 
                 <div class="hero-fade-4 flex flex-col sm:flex-row gap-4 justify-center mb-16">
                     <a href="#trips"
-                        class="group px-8 py-4 bg-pink-600 hover:bg-pink-500 text-white rounded-2xl font-semibold transition-all shadow-lg shadow-pink-600/30 hover:shadow-pink-500/40 hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                        class="group px-8 py-4 bg-pink-600 hover:bg-pink-500 text-white rounded-2xl font-semibold transition-all shadow-lg shadow-pink-600/30 hover:shadow-pink-500/40 hover:-translate-y-0.5 flex items-center justify-center">
                         <span>Pesan Sekarang</span>
-                        <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none"
-                            stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                        </svg>
                     </a>
                     <a href="#destinasi"
                         class="px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/30 text-white rounded-2xl font-semibold transition-all hover:-translate-y-0.5">
@@ -293,17 +322,20 @@
 
         <section class="relative py-24 bg-white overflow-hidden">
             <div class="max-w-5xl mx-auto px-4">
-                <div class="relative rounded-[3rem] p-12 md:p-20 overflow-hidden shadow-xl shadow-pink-100/50" style="background-color: #FBDADC !important;">
-                    
+                <div class="relative rounded-[3rem] p-12 md:p-20 overflow-hidden shadow-xl shadow-pink-100/50"
+                    style="background-color: #FBDADC !important;">
+
                     <div class="absolute top-0 right-0 -mt-20 -mr-20 w-64 h-64 bg-white/20 rounded-full blur-3xl"></div>
-                    <div class="absolute bottom-0 left-0 -mb-20 -ml-20 w-64 h-64 bg-white/20 rounded-full blur-3xl"></div>
+                    <div class="absolute bottom-0 left-0 -mb-20 -ml-20 w-64 h-64 bg-white/20 rounded-full blur-3xl">
+                    </div>
 
                     <div class="relative z-10 text-center">
                         <span class="text-6xl font-serif opacity-90 leading-none" style="color: #132440 !important;">
                             “
                         </span>
 
-                        <h2 class="mt-6 text-3xl sm:text-4xl md:text-5xl font-bold leading-tight tracking-tight" style="color: #132440 !important;">
+                        <h2 class="mt-6 text-3xl sm:text-4xl md:text-5xl font-bold leading-tight tracking-tight"
+                            style="color: #132440 !important;">
                             Jangan Mati Sebelum Ke<br>
                             <span class="inline-block mt-2">Banda Neira</span>
                         </h2>
@@ -334,43 +366,58 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 reveal">
                     <div class="text-center group">
-                        <div class="w-20 h-20 bg-pink-50 rounded-2xl flex items-center justify-center mx-auto mb-6 overflow-hidden group-hover:-translate-y-2 group-hover:shadow-lg group-hover:shadow-pink-100 transition-all duration-300 border border-pink-100/50">
-                            <img src="{{ asset('images/pemandu-berpengalaman.png') }}" alt="Pemandu Berpengalaman" class="w-full h-full object-cover">
+                        <div
+                            class="w-20 h-20 bg-pink-50 rounded-2xl flex items-center justify-center mx-auto mb-6 overflow-hidden group-hover:-translate-y-2 group-hover:shadow-lg group-hover:shadow-pink-100 transition-all duration-300 border border-pink-100/50">
+                            <img src="{{ asset('images/pemandu-berpengalaman.png') }}" alt="Pemandu Berpengalaman"
+                                class="w-full h-full object-cover">
                         </div>
                         <h3 class="font-bold text-[#020617] mb-2">Pemandu Berpengalaman</h3>
-                        <p class="text-gray-500 text-sm leading-relaxed">Pemandu wisata berpengalaman dan bersertifikat</p>
+                        <p class="text-gray-500 text-sm leading-relaxed">Pemandu wisata berpengalaman dan bersertifikat
+                        </p>
                     </div>
 
                     <div class="text-center group">
-                        <div class="w-20 h-20 bg-pink-50 rounded-2xl flex items-center justify-center mx-auto mb-6 overflow-hidden group-hover:-translate-y-2 group-hover:shadow-lg group-hover:shadow-pink-100 transition-all duration-300 border border-pink-100/50">
-                            <img src="{{ asset('images/harga.png') }}" alt="Harga Terjangkau" class="w-full h-full object-cover">
+                        <div
+                            class="w-20 h-20 bg-pink-50 rounded-2xl flex items-center justify-center mx-auto mb-6 overflow-hidden group-hover:-translate-y-2 group-hover:shadow-lg group-hover:shadow-pink-100 transition-all duration-300 border border-pink-100/50">
+                            <img src="{{ asset('images/harga.png') }}" alt="Harga Terjangkau"
+                                class="w-full h-full object-cover">
                         </div>
                         <h3 class="font-bold text-[#020617] mb-2">Harga Terjangkau</h3>
-                        <p class="text-gray-500 text-sm leading-relaxed">Paket wisata dengan harga terjangkau berkualitas</p>
+                        <p class="text-gray-500 text-sm leading-relaxed">Paket wisata dengan harga terjangkau
+                            berkualitas</p>
                     </div>
 
                     <div class="text-center group">
-                        <div class="w-20 h-20 bg-pink-50 rounded-2xl flex items-center justify-center mx-auto mb-6 overflow-hidden group-hover:-translate-y-2 group-hover:shadow-lg group-hover:shadow-pink-100 transition-all duration-300 border border-pink-100/50">
-                            <img src="{{ asset('images/jaminan-keamanan.png') }}" alt="Keamanan Terjamin" class="w-full h-full object-cover">
+                        <div
+                            class="w-20 h-20 bg-pink-50 rounded-2xl flex items-center justify-center mx-auto mb-6 overflow-hidden group-hover:-translate-y-2 group-hover:shadow-lg group-hover:shadow-pink-100 transition-all duration-300 border border-pink-100/50">
+                            <img src="{{ asset('images/jaminan-keamanan.png') }}" alt="Keamanan Terjamin"
+                                class="w-full h-full object-cover">
                         </div>
                         <h3 class="font-bold text-[#020617] mb-2">Keamanan Terjamin</h3>
-                        <p class="text-gray-500 text-sm leading-relaxed">Asuransi perjalanan dan perlindungan lengkap</p>
+                        <p class="text-gray-500 text-sm leading-relaxed">Asuransi perjalanan dan perlindungan lengkap
+                        </p>
                     </div>
 
                     <div class="text-center group">
-                        <div class="w-20 h-20 bg-pink-50 rounded-2xl flex items-center justify-center mx-auto mb-6 overflow-hidden group-hover:-translate-y-2 group-hover:shadow-lg group-hover:shadow-pink-100 transition-all duration-300 border border-pink-100/50">
-                            <img src="{{ asset('images/terpercaya.png') }}" alt="Terpercaya oleh Wisatawan" class="w-full h-full object-cover">
+                        <div
+                            class="w-20 h-20 bg-pink-50 rounded-2xl flex items-center justify-center mx-auto mb-6 overflow-hidden group-hover:-translate-y-2 group-hover:shadow-lg group-hover:shadow-pink-100 transition-all duration-300 border border-pink-100/50">
+                            <img src="{{ asset('images/terpercaya.png') }}" alt="Terpercaya oleh Wisatawan"
+                                class="w-full h-full object-cover">
                         </div>
                         <h3 class="font-bold text-[#020617] mb-2">Terpercaya oleh Wisatawan</h3>
-                        <p class="text-gray-500 text-sm leading-relaxed">Rating tinggi dari ribuan pelanggan yang puas</p>
+                        <p class="text-gray-500 text-sm leading-relaxed">Rating tinggi dari ribuan pelanggan yang puas
+                        </p>
                     </div>
 
                     <div class="text-center group">
-                        <div class="w-20 h-20 bg-pink-50 rounded-2xl flex items-center justify-center mx-auto mb-6 overflow-hidden group-hover:-translate-y-2 group-hover:shadow-lg group-hover:shadow-pink-100 transition-all duration-300 border border-pink-100/50">
-                            <img src="{{ asset('images/fleksibel.png') }}" alt="Jadwal Fleksibel" class="w-full h-full object-cover">
+                        <div
+                            class="w-20 h-20 bg-pink-50 rounded-2xl flex items-center justify-center mx-auto mb-6 overflow-hidden group-hover:-translate-y-2 group-hover:shadow-lg group-hover:shadow-pink-100 transition-all duration-300 border border-pink-100/50">
+                            <img src="{{ asset('images/fleksibel.png') }}" alt="Jadwal Fleksibel"
+                                class="w-full h-full object-cover">
                         </div>
                         <h3 class="font-bold text-[#020617] mb-2">Jadwal Fleksibel</h3>
-                        <p class="text-gray-500 text-sm leading-relaxed">Jadwal yang dapat disesuaikan dengan kebutuhan Anda</p>
+                        <p class="text-gray-500 text-sm leading-relaxed">Jadwal yang dapat disesuaikan dengan kebutuhan
+                            Anda</p>
                     </div>
                 </div>
             </div>
@@ -379,8 +426,10 @@
         <section class="py-24 px-4 bg-gray-50/50 border-t border-gray-100">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center mb-16 reveal">
-                    <h2 class="text-3xl md:text-4xl font-bold text-[#020617] mb-4 tracking-tight">Apa Kata <span class="text-pink-600">Traveler?</span></h2>
-                    <p class="text-lg text-gray-500">Dengarkan pengalaman mereka yang telah menjelajahi keindahan Indonesia bersama kami</p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-[#020617] mb-4 tracking-tight">Apa Kata <span
+                            class="text-pink-600">Traveler?</span></h2>
+                    <p class="text-lg text-gray-500">Dengarkan pengalaman mereka yang telah menjelajahi keindahan
+                        Indonesia bersama kami</p>
                 </div>
 
                 <div id="testimonials-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -404,11 +453,12 @@
         try {
             const response = await fetch('/api/trips');
             const data = await response.json();
-            
+
             tripsData = Array.isArray(data) ? data : Object.values(data);
 
             if (tripsData.length === 0) {
-                document.getElementById('tripsCarouselTrack').innerHTML = '<p class="col-span-full text-center text-gray-500 py-8">Belum ada paket trip tersedia</p>';
+                document.getElementById('tripsCarouselTrack').innerHTML =
+                    '<p class="col-span-full text-center text-gray-500 py-8">Belum ada paket trip tersedia</p>';
                 return;
             }
 
@@ -456,7 +506,8 @@
 
         } catch (error) {
             console.error('Error loading trips:', error);
-            document.getElementById('tripsCarouselTrack').innerHTML = '<p class="col-span-full text-center text-red-500 py-8">Gagal memuat paket trip</p>';
+            document.getElementById('tripsCarouselTrack').innerHTML =
+                '<p class="col-span-full text-center text-red-500 py-8">Gagal memuat paket trip</p>';
         }
     }
 
@@ -534,11 +585,12 @@
         try {
             const response = await fetch('/api/destinations');
             const data = await response.json();
-            
+
             destinationsData = Array.isArray(data) ? data : Object.values(data);
 
             if (destinationsData.length === 0) {
-                document.getElementById('carouselTrack').innerHTML = '<p class="col-span-full text-center text-gray-500 py-8">Belum ada destinasi tersedia</p>';
+                document.getElementById('carouselTrack').innerHTML =
+                    '<p class="col-span-full text-center text-gray-500 py-8">Belum ada destinasi tersedia</p>';
                 return;
             }
 
@@ -584,7 +636,8 @@
 
         } catch (error) {
             console.error('Error loading destinations:', error);
-            document.getElementById('carouselTrack').innerHTML = '<p class="col-span-full text-center text-red-500 py-8">Gagal memuat destinasi</p>';
+            document.getElementById('carouselTrack').innerHTML =
+                '<p class="col-span-full text-center text-red-500 py-8">Gagal memuat destinasi</p>';
         }
     }
 
@@ -623,7 +676,8 @@
                             </div>
                             <p class="text-gray-600 leading-relaxed relative z-10">"${review.comment || 'Pengalaman wisata yang sangat berkesan dan terorganisir dengan sangat baik!'}"</p>
                         </div>
-                    `;}).join('');
+                    `;
+            }).join('');
         } catch (error) {
             console.error('Error loading testimonials:', error);
             container.innerHTML =

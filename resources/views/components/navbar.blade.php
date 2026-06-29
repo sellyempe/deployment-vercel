@@ -7,7 +7,8 @@
 
             <a href="/" class="flex items-center gap-3 group flex-shrink-0">
 
-                <img src="{{ asset(get_setting('site_logo', 'images/logo-pinktravel.png')) }}" alt="{{ get_setting('site_name', 'Pink Tour and Travel') }}" class="w-12 h-12 object-cover rounded-xl bg-white p-1 shadow-md
+                <img src="{{ asset(get_setting('site_logo', 'images/logo-pinktravel.png')) }}"
+                    alt="{{ get_setting('site_name', 'Pink Tour and Travel') }}" class="w-12 h-12 object-cover rounded-xl bg-white p-1 shadow-md
                 group-hover:scale-105 transition-transform duration-200">
 
                 <div class="flex flex-col leading-tight">
@@ -32,7 +33,8 @@
                     Destinasi<span class="nav-link-underline"></span>
                 </a>
                 <a href="https://wa.me/{{ get_setting('contact_whatsapp', '6282115249423') }}?text=Halo%20{{ urlencode(get_setting('site_name', 'Pink Tour and Travel')) }},%20saya%20ingin%20bertanya"
-                    target="_blank" class="nav-link relative px-4 py-2 font-medium text-sm cursor-pointer">
+                    onclick="contactWhatsApp(event, this.href)"
+                    class="nav-link relative px-4 py-2 font-medium text-sm cursor-pointer">
                     Kontak<span class="nav-link-underline"></span>
                 </a>
 
@@ -44,12 +46,13 @@
                         class="flex items-center gap-2 px-3 py-2 rounded-full hover:bg-white/10 transition">
 
                         @if(auth()->user()->photo)
-                            <img src="{{ asset('storage/' . auth()->user()->photo) }}" alt="Profile" class="w-9 h-9 rounded-full object-cover">
+                        <img src="{{ asset('storage/' . auth()->user()->photo) }}" alt="Profile"
+                            class="w-9 h-9 rounded-full object-cover">
                         @else
-                            <div
-                                class="w-9 h-9 rounded-full bg-pink-500 flex items-center justify-center text-sm font-bold text-white flex-shrink-0">
-                                {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
-                            </div>
+                        <div
+                            class="w-9 h-9 rounded-full bg-pink-500 flex items-center justify-center text-sm font-bold text-white flex-shrink-0">
+                            {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                        </div>
                         @endif
 
                         <span id="userName" class="text-white font-medium text-sm transition duration-300">
@@ -117,7 +120,8 @@
         <a href="/" onclick="handleNavClick(event,'destinasi')"
             class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-300 hover:text-white hover:bg-white/10 font-medium transition">📍
             Destinasi</a>
-        <a href="/" onclick="handleNavClick(event,'kontak')"
+        <a href="https://wa.me/{{ get_setting('contact_whatsapp', '6282115249423') }}?text=Halo%20{{ urlencode(get_setting('site_name', 'Pink Tour and Travel')) }},%20saya%20ingin%20bertanya"
+            onclick="contactWhatsApp(event, this.href)"
             class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-300 hover:text-white hover:bg-white/10 font-medium transition">📞
             Kontak</a>
         <div class="pt-2 border-t border-white/10 space-y-2">
@@ -146,115 +150,137 @@
 </nav>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
 
-        const mainNav = document.getElementById('mainNav');
-        const isAlwaysScrolled =
-            "{{ $alwaysScrolled ? 'true' : 'false' }}" === "true";
+    const mainNav = document.getElementById('mainNav');
+    const isAlwaysScrolled =
+        "{{ $alwaysScrolled ? 'true' : 'false' }}" === "true";
 
-        function handleScroll() {
+    function handleScroll() {
 
-            if (!mainNav) return;
+        if (!mainNav) return;
 
-            const userName =
-                document.getElementById('userName');
+        const userName =
+            document.getElementById('userName');
 
-            if (isAlwaysScrolled || window.scrollY > 60) {
+        if (isAlwaysScrolled || window.scrollY > 60) {
 
-                mainNav.classList.add('scrolled');
+            mainNav.classList.add('scrolled');
 
-                // navbar putih
-                if (userName) {
-                    userName.classList.remove('text-white');
-                    userName.classList.add('text-[#020617]');
-                }
+            // navbar putih
+            if (userName) {
+                userName.classList.remove('text-white');
+                userName.classList.add('text-[#020617]');
+            }
 
-            } else {
+        } else {
 
-                mainNav.classList.remove('scrolled');
+            mainNav.classList.remove('scrolled');
 
-                // navbar transparan
-                if (userName) {
-                    userName.classList.remove('text-[#020617]');
-                    userName.classList.add('text-white');
-                }
+            // navbar transparan
+            if (userName) {
+                userName.classList.remove('text-[#020617]');
+                userName.classList.add('text-white');
             }
         }
+    }
 
-        window.addEventListener('scroll', handleScroll, {
-            passive: true
-        });
-
-        handleScroll();
-
-        window.toggleMobileMenu = function() {
-            const menu = document.getElementById('mobileMenu');
-            const h = document.getElementById('hamburgerIcon');
-            const c = document.getElementById('closeIcon');
-
-            if (!menu || !h || !c) return;
-
-            const open = menu.classList.contains('hidden');
-
-            menu.classList.toggle('hidden', !open);
-            h.classList.toggle('hidden', open);
-            c.classList.toggle('hidden', !open);
-        };
-
-        window.handleNavClick = function(event, sectionId) {
-            event.preventDefault();
-
-            const mobileMenu = document.getElementById('mobileMenu');
-            const hamburgerIcon =
-                document.getElementById('hamburgerIcon');
-            const closeIcon =
-                document.getElementById('closeIcon');
-
-            if (mobileMenu) {
-                mobileMenu.classList.add('hidden');
-            }
-
-            if (hamburgerIcon) {
-                hamburgerIcon.classList.remove('hidden');
-            }
-
-            if (closeIcon) {
-                closeIcon.classList.add('hidden');
-            }
-
-            if (
-                window.location.pathname === '/' ||
-                window.location.pathname === ''
-            ) {
-                const el =
-                    document.getElementById(sectionId);
-
-                if (el) {
-                    el.scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                }
-            } else {
-                window.location.href =
-                    '/#' + sectionId;
-            }
-        };
-
-        window.toggleProfileDropdown = function() {
-            const dropdown = document.getElementById('profileDropdown');
-            if (dropdown) {
-                dropdown.classList.toggle('hidden');
-            }
-        };
-
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function(event) {
-            const dropdown = document.getElementById('profileDropdown');
-            const profileBtn = event.target.closest('button[onclick="toggleProfileDropdown()"]');
-
-            if (dropdown && !profileBtn && !dropdown.contains(event.target)) {
-                dropdown.classList.add('hidden');
-            }
-        });
+    window.addEventListener('scroll', handleScroll, {
+        passive: true
     });
+
+    handleScroll();
+
+    window.toggleMobileMenu = function() {
+        const menu = document.getElementById('mobileMenu');
+        const h = document.getElementById('hamburgerIcon');
+        const c = document.getElementById('closeIcon');
+
+        if (!menu || !h || !c) return;
+
+        const open = menu.classList.contains('hidden');
+
+        menu.classList.toggle('hidden', !open);
+        h.classList.toggle('hidden', open);
+        c.classList.toggle('hidden', !open);
+    };
+
+    window.handleNavClick = function(event, sectionId) {
+        event.preventDefault();
+
+        const mobileMenu = document.getElementById('mobileMenu');
+        const hamburgerIcon =
+            document.getElementById('hamburgerIcon');
+        const closeIcon =
+            document.getElementById('closeIcon');
+
+        if (mobileMenu) {
+            mobileMenu.classList.add('hidden');
+        }
+
+        if (hamburgerIcon) {
+            hamburgerIcon.classList.remove('hidden');
+        }
+
+        if (closeIcon) {
+            closeIcon.classList.add('hidden');
+        }
+
+        if (
+            window.location.pathname === '/' ||
+            window.location.pathname === ''
+        ) {
+            const el =
+                document.getElementById(sectionId);
+
+            if (el) {
+                el.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
+        } else {
+            window.location.href =
+                '/#' + sectionId;
+        }
+    };
+
+    window.toggleProfileDropdown = function() {
+        const dropdown = document.getElementById('profileDropdown');
+        if (dropdown) {
+            dropdown.classList.toggle('hidden');
+        }
+    };
+
+    window.contactWhatsApp = function(event, url) {
+        event.preventDefault();
+        Swal.fire({
+            title: 'Hubungi WhatsApp',
+            text: 'Anda akan dialihkan ke WhatsApp Customer Service kami. Apakah Anda ingin melanjutkan?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Lanjutkan',
+            cancelButtonText: 'Batal',
+            confirmButtonColor: '#db2777', // pink-600
+            cancelButtonColor: '#6b7280', // gray-500
+            customClass: {
+                popup: 'rounded-[1.5rem]'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.open(url, '_blank');
+            }
+        });
+    };
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(event) {
+        const dropdown = document.getElementById('profileDropdown');
+        const profileBtn = event.target.closest('button[onclick="toggleProfileDropdown()"]');
+
+        if (dropdown && !profileBtn && !dropdown.contains(event.target)) {
+            dropdown.classList.add('hidden');
+        }
+    });
+});
 </script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

@@ -2,7 +2,8 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             <div>
-                <h3 class="text-lg font-bold mb-4" style="color: #ffffff !important;">{{ get_setting('site_name', 'Pink Tour and Travel') }}</h3>
+                <h3 class="text-lg font-bold mb-4" style="color: #ffffff !important;">
+                    {{ get_setting('site_name', 'Pink Tour and Travel') }}</h3>
                 <p class="text-sm leading-relaxed" style="color: rgba(255, 255, 255, 0.7) !important;">
                     {{ get_setting('site_description', 'Jelajahi destinasi impian Anda bersama kami dengan paket wisata terpercaya dan berpengalaman.') }}
                 </p>
@@ -11,18 +12,24 @@
             <div>
                 <h4 class="font-bold mb-4" style="color: #ffffff !important;">Menu</h4>
                 <ul class="space-y-2 text-sm">
-                    <li><a href="/" class="hover:text-pink-400 transition font-medium" style="color: rgba(255, 255, 255, 0.7) !important;">Beranda</a></li>
-                    <li><a href="#destinasi" class="hover:text-pink-400 transition font-medium" style="color: rgba(255, 255, 255, 0.7) !important;">Destinasi</a></li>
-                    <li><a href="#paket" class="hover:text-pink-400 transition font-medium" style="color: rgba(255, 255, 255, 0.7) !important;">Paket Wisata</a></li>
+                    <li><a href="{{ url('/') }}" class="hover:text-pink-400 transition font-medium"
+                            style="color: rgba(255, 255, 255, 0.7) !important;">Beranda</a></li>
+                    <li><a href="{{ url('/') }}#destinasi" class="hover:text-pink-400 transition font-medium"
+                            style="color: rgba(255, 255, 255, 0.7) !important;">Destinasi</a></li>
+                    <li><a href="{{ url('/') }}#trips" class="hover:text-pink-400 transition font-medium"
+                            style="color: rgba(255, 255, 255, 0.7) !important;">Paket Wisata</a></li>
                 </ul>
             </div>
 
             <div>
                 <h4 class="font-bold mb-4" style="color: #ffffff !important;">Informasi</h4>
                 <ul class="space-y-2 text-sm">
-                    <li><a href="#" class="hover:text-pink-400 transition font-medium" style="color: rgba(255, 255, 255, 0.7) !important;">Tentang Kami</a></li>
-                    <li><a href="#" class="hover:text-pink-400 transition font-medium" style="color: rgba(255, 255, 255, 0.7) !important;">Syarat & Ketentuan</a></li>
-                    <li><a href="#" class="hover:text-pink-400 transition font-medium" style="color: rgba(255, 255, 255, 0.7) !important;">Kebijakan Privasi</a></li>
+                    <li><a href="#" class="hover:text-pink-400 transition font-medium"
+                            style="color: rgba(255, 255, 255, 0.7) !important;">Tentang Kami</a></li>
+                    <li><a href="#" class="hover:text-pink-400 transition font-medium"
+                            style="color: rgba(255, 255, 255, 0.7) !important;">Syarat & Ketentuan</a></li>
+                    <li><a href="#" class="hover:text-pink-400 transition font-medium"
+                            style="color: rgba(255, 255, 255, 0.7) !important;">Kebijakan Privasi</a></li>
                 </ul>
             </div>
 
@@ -31,10 +38,13 @@
                 <ul class="space-y-2 text-sm">
                     <li>
                         <a href="mailto:{{ get_setting('contact_email', 'pinktourandtravel@gmail.com') }}"
-                            class="hover:text-pink-400 transition font-medium" style="color: rgba(255, 255, 255, 0.7) !important;">{{ get_setting('contact_email', 'pinktourandtravel@gmail.com') }}</a>
+                            class="hover:text-pink-400 transition font-medium"
+                            style="color: rgba(255, 255, 255, 0.7) !important;">{{ get_setting('contact_email', 'pinktourandtravel@gmail.com') }}</a>
                     </li>
                     <li>
-                        <a href="tel:{{ str_replace(' ', '', get_setting('contact_phone', '+62 852 9821 0193')) }}" class="hover:text-pink-400 transition font-medium" style="color: rgba(255, 255, 255, 0.7) !important;">{{ get_setting('contact_phone', '+62 852 9821 0193') }}</a>
+                        <a href="tel:{{ str_replace(' ', '', get_setting('contact_phone', '+62 852 9821 0193')) }}"
+                            class="hover:text-pink-400 transition font-medium"
+                            style="color: rgba(255, 255, 255, 0.7) !important;">{{ get_setting('contact_phone', '+62 852 9821 0193') }}</a>
                     </li>
                     <li class="font-medium" style="color: rgba(255, 255, 255, 0.7) !important;">
                         {{ get_setting('contact_address', 'Makassar, Indonesia') }}

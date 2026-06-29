@@ -40,13 +40,13 @@ class ProfileController extends Controller
     public function update(Request $request)
     {
         /** @var User $user */
-            $user = Auth::user();
+        $user = Auth::user();
 
         // Validate input
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users,email,'.$user->id,
-            'phone' => 'nullable|string|max:20',
+            'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+            'phone' => 'nullable|regex:/^[0-9]+$/|min:10|max:13',
             'gender' => 'nullable|in:male,female,other',
             'birth_date' => [
                 'nullable',
@@ -55,6 +55,9 @@ class ProfileController extends Controller
             ],
             'photo' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ], [
+            'phone.regex' => 'Nomor telepon hanya boleh berisi angka.',
+            'phone.min' => 'Nomor telepon minimal harus terdiri dari 10 angka.',
+            'phone.max' => 'Nomor telepon maksimal harus terdiri dari 13 angka.',
             'birth_date.before_or_equal' => 'Tanggal lahir tidak boleh lebih dari hari ini.',
             'email.unique' => 'Email sudah terdaftar.',
             'photo.mimes' => 'Format foto harus JPG, JPEG, PNG, atau WEBP.',
@@ -95,7 +98,8 @@ class ProfileController extends Controller
     public function updatePassword(Request $request)
     {
         /** @var User $user */
-            $user = Auth::user();
+        $user = Auth::user();
+
 
         $validated = $request->validate([
             'current_password' => 'required|current_password',
