@@ -86,7 +86,7 @@ class AdminController extends Controller
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $index => $file) {
                 $path = $file->store('images/trips', 'public');
-                $imageUrl = Storage::url($path);
+                $imageUrl = Storage::disk('public')->url($path);
                 
                 $trip->images()->create([
                     'path' => $imageUrl,
@@ -198,7 +198,7 @@ class AdminController extends Controller
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $file) {
                 $path = $file->store('images/trips', 'public');
-                $imageUrl = Storage::url($path);
+                $imageUrl = Storage::disk('public')->url($path);
                 
                 $trip->images()->create([
                     'path' => $imageUrl,
@@ -324,7 +324,7 @@ class AdminController extends Controller
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $index => $file) {
                 $path = $file->store('images/destinations', 'public');
-                $imageUrl = Storage::url($path);
+                $imageUrl = Storage::disk('public')->url($path);
                 
                 $destination->images()->create([
                     'path' => $imageUrl,
@@ -368,7 +368,7 @@ class AdminController extends Controller
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $file) {
                 $path = $file->store('images/destinations', 'public');
-                $imageUrl = Storage::url($path);
+                $imageUrl = Storage::disk('public')->url($path);
                 
                 $destination->images()->create([
                     'path' => $imageUrl,
@@ -485,7 +485,7 @@ class AdminController extends Controller
                         $oldPath = str_replace('/storage/', '', parse_url($setting->value, PHP_URL_PATH));
                     }
                     $path = $this->handleImageUpload($request, $key, $oldPath);
-                    $setting->value = Storage::url($path);
+                    $setting->value = Storage::disk('public')->url($path);
                 } else {
                     $setting->value = $value;
                 }

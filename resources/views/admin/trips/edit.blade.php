@@ -496,21 +496,9 @@
     </form>
 
     <script>
-    let itineraryCount = {
-            {
-                max(1, count($trip - > itineraries))
-            }
-        },
-        includeCount = {
-            {
-                max(1, count($trip - > includes))
-            }
-        },
-        excludeCount = {
-            {
-                max(1, count($trip - > excludes))
-            }
-        };
+    let itineraryCount = {{ max(1, count($trip->itineraries)) }},
+        includeCount = {{ max(1, count($trip->includes)) }},
+        excludeCount = {{ max(1, count($trip->excludes)) }};
 
     function removeItem(el, selector) {
         const item = el.closest(selector);

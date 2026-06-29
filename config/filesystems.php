@@ -39,9 +39,9 @@ return [
         ],
 
         'public' => [
-            'driver' => env('PUBLIC_STORAGE_DRIVER', 'local'),
-            'root' => env('PUBLIC_STORAGE_DRIVER') === 's3' ? '' : storage_path('app/public'),
-            'url' => env('PUBLIC_STORAGE_DRIVER') === 's3' ? env('AWS_URL') : rtrim(env('APP_URL', 'http://localhost'), '/').'/storage',
+            'driver' => env('PUBLIC_STORAGE_DRIVER', env('VERCEL') ? 's3' : 'local'),
+            'root' => (env('PUBLIC_STORAGE_DRIVER') === 's3' || (empty(env('PUBLIC_STORAGE_DRIVER')) && env('VERCEL'))) ? '' : storage_path('app/public'),
+            'url' => (env('PUBLIC_STORAGE_DRIVER') === 's3' || (empty(env('PUBLIC_STORAGE_DRIVER')) && env('VERCEL'))) ? env('AWS_URL') : rtrim(env('APP_URL', 'http://localhost'), '/').'/storage',
             'visibility' => 'public',
             'throw' => false,
             'report' => false,
